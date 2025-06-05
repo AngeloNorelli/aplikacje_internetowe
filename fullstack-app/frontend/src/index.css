@@ -1,0 +1,85 @@
+:root {
+  --primary: #4a4a8a;
+  --secondary: #5a5a9e;
+  --accent: #6a6ab0;
+  --light: #7a7ac0;
+
+  --toastify-icon-color-error: var(--light);
+}
+
+body {
+  background-color: var(--primary);
+}
+
+body .bg-primary {
+  background-color: var(--primary) !important;
+}
+
+.text-center .bg-light {
+  font-size: 1.5rem;
+}
+
+.card {
+  background-color: var(--secondary);
+  border: none;
+}
+
+.card .form-control {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  border-radius: 8px;
+}
+
+.card .form-control:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px var(--accent);
+}
+
+.card .form-label {
+  color: white;
+}
+
+.card .btn-primary {
+  background-color: var(--accent);
+  border: none;
+}
+
+.card .btn-primary:hover {
+  background-color: var(--light);
+}
+
+.card .text-muted {
+  color: white;
+}
+
+.text-muted a {
+  color: #b0b0ff;
+}
+
+.text-muted a:hover {
+  color: #c5c5ff;
+}
+
+.Toastify__toast-container {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+.Toastify__toast {
+  background-color: var(--secondary);
+  color: #ffffff;
+  border-radius: 8px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-outline-primary {
+  color: var(--light);
+  border-color: var(--accent);
+}
+
+.btn-outline-primary:hover {
+  background-color: var(--accent);
+  border-color: var(--light);
+  color: white;
+}

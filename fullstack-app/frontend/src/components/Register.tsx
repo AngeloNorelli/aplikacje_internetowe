@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { useToast } from "../context/ToastContext";
 import { Link, useNavigate } from "react-router-dom";
-import { register } from "../api/api";
+import { register } from "../api/auth";
 
 const Register: React.FC = () => {
   const [email, setEmail] = useState("");
+  const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [repeatPassword, setRepeatPassword] = useState("");
   const { setErrorMessage } = useToast();
@@ -20,7 +21,7 @@ const Register: React.FC = () => {
     }
 
     try {
-      await register(email, password);
+      await register(email, username, password);
       setSuccessMessage("Account created successfully! You can now log in.");
       navigate("/login");
     } catch (error: unknown) {
@@ -53,6 +54,19 @@ const Register: React.FC = () => {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
+              required
+              className="form-control"
+            />
+          </div>
+          <div className="mb-3 text-start">
+            <label htmlFor="username" className="form-label ms-2">
+              username
+            </label>
+            <input
+              type="username"
+              id="username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
               required
               className="form-control"
             />

@@ -73,6 +73,24 @@ body .bg-primary {
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
+.btn-primary {
+  background-color: var(--accent);
+  border-color: var(--accent);
+  color: white;
+}
+
+.btn-primary:hover {
+  background-color: var(--light);
+  border-color: var(--accent);
+  color: white;
+}
+
+.btn-primary:checked, .btn-primary:active, .show > .btn-primary {
+  background-color: var(--secondary) !important;
+  border-color: var(--accent) !important;
+  color: white !important;
+}
+
 .btn-outline-primary {
   color: var(--light);
   border-color: var(--accent);

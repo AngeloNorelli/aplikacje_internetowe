@@ -83,3 +83,7 @@ body .bg-primary {
   border-color: var(--light);
   color: white;
 }
+
+.dropdown-item {
+  color: white;
+}

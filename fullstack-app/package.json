@@ -1,6 +1,8 @@
 {
   "scripts": {
     "start:backend": "cd backend && npm run start",
-    "start:frontend": "cd frontend && npm run start"
+    "install:backend": "cd backend && npm install",
+    "start:frontend": "cd frontend && npm run start",
+    "install:frontend": "cd frontend && npm install"
   }
 }

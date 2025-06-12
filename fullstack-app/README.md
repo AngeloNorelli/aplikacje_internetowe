@@ -27,12 +27,11 @@
     * w body dostaje 
 * endpointy do notatek
   - GET /notes?user={id}
-    * lista notatek
+    * lista notatek z całą zawartością
   - POST /notes?user={id}
     * tworzenie notatki - tworzy nową notatkę
-    * w body otrzymuje text notatki
-  - GET /notes?user={id}&noteID{id}
-    * zwraca zawartość notatki id
+    * w body nic nie dostaje związanego z notatką
+    * zwraca id notatki i jej zawartość
   - PUT /notes?user={id}&noteID{id}
     * edycja notatki id
     * w body dostaje całą zawartość notatki
@@ -50,3 +49,5 @@
   - navbar
   - notelist
   - noteblock
+* strona z profilem
+* strina z ustawieniami

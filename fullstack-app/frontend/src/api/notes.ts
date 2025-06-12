@@ -26,7 +26,7 @@ const getNotesList = async (token: string) => {
   return response.json();
 };
 
-const createNote = async (token: string, note: { title: string; content: string }) => {
+const createNote = async (token: string, note: {title: string}) => {
   const id = getID(token);
   const response = await fetch(`${BASE_URL}/notes?user=${id}`, {
     method: "POST",

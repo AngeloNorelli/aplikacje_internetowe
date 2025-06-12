@@ -36,6 +36,28 @@ const NoteBoard: React.FC<{note?: Note}> = ({note}) => {
     )
   }
 
+  const handleSave = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setErrorMessage("You must be logged in to save notes.");
+      return;
+    }
+
+    if (id === null) {
+      setErrorMessage("Note ID is not set. Cannot update note.");
+      return;
+    }
+    
+    try {
+      await updateNote(token, {id, title, content});
+      setSuccessMessage("Note updated successfully!");
+    } catch (error) {
+      setErrorMessage("Failed to update note. Please try again.");
+      console.error("Update note error:", error);
+      return;
+    }
+  }
+
   return (
     <div
       style={{
@@ -69,27 +91,7 @@ const NoteBoard: React.FC<{note?: Note}> = ({note}) => {
               padding: "4px 16px",
               fontSize: 14
             }}
-            onClick={ () => {
-              const token = localStorage.getItem("token");
-              if (!token) {
-                setErrorMessage("You must be logged in to save notes.");
-                return;
-              }
-
-              if (id === null) {
-                setErrorMessage("Note ID is not set. Cannot update note.");
-                return;
-              }
-              
-              try {
-                updateNote(token, {id, title, content});
-                setSuccessMessage("Note updated successfully!");
-              } catch (error) {
-                setErrorMessage("Failed to update note. Please try again.");
-                console.error("Update note error:", error);
-                return;
-              }
-            }}
+            onClick={ handleSave }
           >
             save
           </button>

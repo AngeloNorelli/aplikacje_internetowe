@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { deleteNote } from "../../api/notes";
+import { createNote, deleteNote } from "../../api/notes";
 import { useToast } from "../../context/ToastContext";
 
 type Note = {
@@ -12,10 +12,40 @@ const NotesList: React.FC<{
   notes: Note[];
   selectedId?: number;
   onSelect?: (id: number) => void;
-}> = ({notes, selectedId, onSelect }) => {
+  onNoteCreated?: () => void;
+}> = ({notes, selectedId, onSelect, onNoteCreated }) => {
   const [menuOpenId, setMenuOpenId] = useState<number | null>(null);
+  const [showModal, setShowModal] = useState(false);
+  const [newTitle, setNewTitle] = useState("");
   const { setErrorMessage } = useToast();
   const { setSuccessMessage } = useToast();
+
+  const handleCreateNote = () => {
+    setShowModal(true);
+    setNewTitle("");
+  };
+
+  const handleModalNote = async (e: React.FormEvent) => {
+    e.preventDefault();
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setErrorMessage("You must be logged in to create notes.");
+      return;
+    }
+    if (!newTitle.trim()) {
+      setErrorMessage("Note title cannot be empty.");
+      return;
+    }
+    try {
+      await createNote(token, {title: newTitle});
+      setSuccessMessage("Note created successfully.");
+      setShowModal(false);
+      onNoteCreated?.();
+    } catch (error) {
+      console.error("Failed to create note:", error);
+      setErrorMessage("Failed to create note. Please try again.");
+    }
+  };
 
   React.useEffect(() => {
     const close = () => setMenuOpenId(null);
@@ -40,7 +70,7 @@ const NotesList: React.FC<{
         <button
           className="btn p-0 mx-2"
           style={{ color: "white" }}
-          // TODO: Implement create note functionality
+          onClick={ handleCreateNote }
         >
           +
         </button>
@@ -119,6 +149,47 @@ const NotesList: React.FC<{
           </li>
         ))}
       </ul>
+      {showModal && (
+        <div
+          className="modal-backdrop d-flex justify-content-center align-items-center"
+          style={{
+            position: "fixed",
+            top: 0, left: 0, right: 0, bottom: 0,
+            background: "rgba(0,0,0,0.4)",
+            zIndex: 2000,
+          }}
+          onClick={() => setShowModal(false)}
+        >
+          <form
+            className="form-new-note d-flex flex-column"
+            onSubmit={handleModalNote}
+            onClick={e => e.stopPropagation()}
+          >
+            <label style={{ color: "var(--primary)", fontWeight: 600 }}>
+              Note title:{' '}
+              <input
+                className="form-control mt-2"
+                value={newTitle}
+                onChange={e => setNewTitle(e.target.value)}
+                autoFocus
+              />
+            </label>
+            <div className="d-flex justify-content-end gap-2">
+              <button
+                type="button"
+                className="btn"
+                style={{ color: "var(--primary)" }}
+                onClick={() => setShowModal(false)}
+              >
+                Cancel
+              </button>
+              <button type="submit" className="btn btn-primary">
+                Create
+              </button>
+            </div>
+          </form>
+        </div>
+      )}
     </div>
   );
 };

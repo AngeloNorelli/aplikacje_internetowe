@@ -43,9 +43,9 @@ const createNote = async (token: string, note: { title: string; content: string 
   return response.json();
 };
 
-const updateNote = async (token: string, noteID: string, note: { title: string; content: string }) => {
+const updateNote = async (token: string, note: { id: number, title: string; content: string }) => {
   const id = getID(token);
-  const response = await fetch(`${BASE_URL}/notes?user=${id}&note=${noteID}`, {
+  const response = await fetch(`${BASE_URL}/notes?user=${id}&note=${note.id}`, {
     method: "PUT",
     headers: {
       "Content-Type": "application/json",

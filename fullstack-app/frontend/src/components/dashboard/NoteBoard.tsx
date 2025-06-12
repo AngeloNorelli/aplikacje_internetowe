@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { updateNote } from "../../api/notes";
 import { useToast } from "../../context/ToastContext";
 
 type Note = {
@@ -11,6 +12,8 @@ const NoteBoard: React.FC<{note?: Note}> = ({note}) => {
   const [id, setId] = useState<number | null>(note?.id ?? null);
   const [title, setTitle] = useState(note?.title ?? "");
   const [content, setContent] = useState(note?.content ?? "");
+  const { setErrorMessage } = useToast();
+  const { setSuccessMessage } = useToast();
 
   useEffect(() => {
     setId(note?.id ?? null);
@@ -65,6 +68,27 @@ const NoteBoard: React.FC<{note?: Note}> = ({note}) => {
               borderRadius: 8,
               padding: "4px 16px",
               fontSize: 14
+            }}
+            onClick={ () => {
+              const token = localStorage.getItem("token");
+              if (!token) {
+                setErrorMessage("You must be logged in to save notes.");
+                return;
+              }
+
+              if (id === null) {
+                setErrorMessage("Note ID is not set. Cannot update note.");
+                return;
+              }
+              
+              try {
+                updateNote(token, {id, title, content});
+                setSuccessMessage("Note updated successfully!");
+              } catch (error) {
+                setErrorMessage("Failed to update note. Please try again.");
+                console.error("Update note error:", error);
+                return;
+              }
             }}
           >
             save

@@ -60,6 +60,23 @@ const updateNote = async (token: string, note: { id: number, title: string; cont
   return response.json();
 };
 
+const changeNoteTitle = async (token: string, note: { id: number, title: string }) => {
+  const id = getID(token);
+  const response = await fetch(`${BASE_URL}/notes?user=${id}&note=${note.id}`, {
+    method: "PATCH",
+    headers: {
+      "Content-Type": "application/json",
+      Authorization: `Bearer ${token}`,
+    },
+    body: JSON.stringify({ title: note.title }),
+  });
+
+  if (!response.ok) {
+    throw new Error("Failed to change note title");
+  }
+  return response.json();
+}
+
 const deleteNote = async (token: string, noteID: number) => {
   const id = getID(token);
   const response = await fetch(`${BASE_URL}/notes?user=${id}&note=${noteID}`, {
@@ -76,4 +93,4 @@ const deleteNote = async (token: string, noteID: number) => {
   return response.json();
 };
 
-export { getNotesList, createNote, updateNote, deleteNote };
+export { getNotesList, createNote, updateNote, changeNoteTitle, deleteNote };

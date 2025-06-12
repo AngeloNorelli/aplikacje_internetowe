@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { createNote, deleteNote } from "../../api/notes";
+import { createNote, changeNoteTitle, deleteNote } from "../../api/notes";
 import { useToast } from "../../context/ToastContext";
 
 type Note = {
@@ -16,16 +16,26 @@ const NotesList: React.FC<{
 }> = ({notes, selectedId, onSelect, onNoteCreated }) => {
   const [menuOpenId, setMenuOpenId] = useState<number | null>(null);
   const [showModal, setShowModal] = useState(false);
+  const [modalMode, setModalMode] = useState<"create" | "edit">("create");
+  const [editNoteId, setEditNoteId] = useState<number | null>(null);
   const [newTitle, setNewTitle] = useState("");
   const { setErrorMessage } = useToast();
   const { setSuccessMessage } = useToast();
 
   const handleCreateNote = () => {
-    setShowModal(true);
+    setModalMode("create");
     setNewTitle("");
+    setShowModal(true);
   };
 
-  const handleModalNote = async (e: React.FormEvent) => {
+  const handleEditTitle = (id: number, currentTitle: string) => {
+    setModalMode("edit");
+    setEditNoteId(id);
+    setNewTitle(currentTitle);
+    setShowModal(true);
+  }
+
+  const handleModalSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
     if (!token) {
@@ -37,8 +47,13 @@ const NotesList: React.FC<{
       return;
     }
     try {
-      await createNote(token, {title: newTitle});
-      setSuccessMessage("Note created successfully.");
+      if (modalMode === "create") {
+        await createNote(token, {title: newTitle});
+        setSuccessMessage("Note created successfully.");
+      } else if (modalMode === "edit") {
+        await changeNoteTitle(token, { id: editNoteId!, title: newTitle });
+        setSuccessMessage("Note title updated successfully.");
+      }
       setShowModal(false);
       onNoteCreated?.();
     } catch (error) {
@@ -139,8 +154,10 @@ const NotesList: React.FC<{
                 <button
                   className="dopdown-item btn"
                   style={{ color: "white" }}
-                  // TODO: change name logic
-                  onClick={() => { setMenuOpenId(null)} }
+                  onClick={() => { 
+                    setMenuOpenId(null);
+                    handleEditTitle(note.id, note.title);
+                  }}
                 >
                   change name
                 </button>
@@ -162,7 +179,7 @@ const NotesList: React.FC<{
         >
           <form
             className="form-new-note d-flex flex-column"
-            onSubmit={handleModalNote}
+            onSubmit={handleModalSubmit}
             onClick={e => e.stopPropagation()}
           >
             <label style={{ color: "var(--primary)", fontWeight: 600 }}>
@@ -184,7 +201,7 @@ const NotesList: React.FC<{
                 Cancel
               </button>
               <button type="submit" className="btn btn-primary">
-                Create
+                {modalMode === "create" ? "Create": "Save"}
               </button>
             </div>
           </form>

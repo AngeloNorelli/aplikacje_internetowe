@@ -1,15 +1,16 @@
 import React, { useState } from "react";
 
-const notes = [
-  { id: 1, title: "note_1" },
-  { id: 2, title: "note_2" },
-  { id: 3, title: "note_3" },
-];
+type Note = {
+  id: number;
+  title: string;
+  content?: string;
+};
 
 const NotesList: React.FC<{
+  notes: Note[];
   selectedId?: number;
   onSelect?: (id: number) => void;
-}> = ({ selectedId = 1, onSelect }) => {
+}> = ({notes, selectedId, onSelect }) => {
   const [menuOpenId, setMenuOpenId] = useState<number | null>(null);
 
   React.useEffect(() => {

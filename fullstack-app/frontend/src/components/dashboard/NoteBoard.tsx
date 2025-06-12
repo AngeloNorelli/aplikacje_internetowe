@@ -1,15 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { useToast } from "../../context/ToastContext";
 
-const NoteBoard: React.FC = () => {
-  const [title, setTitle] = useState("note_1");
-  const [content, setContent] = useState("example note xd");
+type Note = {
+  id: number;
+  title: string;
+  content?: string;
+};
+
+const NoteBoard: React.FC<{note?: Note}> = ({note}) => {
+  const [id, setId] = useState<number | null>(note?.id ?? null);
+  const [title, setTitle] = useState(note?.title ?? "");
+  const [content, setContent] = useState(note?.content ?? "");
+
+  useEffect(() => {
+    setId(note?.id ?? null);
+    setTitle(note?.title ?? "");
+    setContent(note?.content ?? "");
+  }, [note]);
+
+  if (!note) {
+    return (
+      <div
+      style={{
+        flex: 1,
+        background: "#f5f7fa",
+        height: "calc(100vh - 60px)",
+        padding: "32px 24px"
+      }}
+    >
+      Select a note to view or edit its content.
+    </div>
+    )
+  }
 
   return (
     <div
       style={{
         flex: 1,
         background: "#f5f7fa",
-        height: "calc(100vh - 56px)",
+        height: "calc(100vh - 60px)",
         padding: "32px 24px"
       }}
     >
@@ -47,7 +76,7 @@ const NoteBoard: React.FC = () => {
           className="form-control"
           style={{
             width: "100%",
-            height: "calc(100vh - 140px)",
+            height: "calc(100vh - 160px)",
             border: "none",
             background: "transparent",
             fontSize: 18,

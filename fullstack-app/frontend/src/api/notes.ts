@@ -60,7 +60,7 @@ const updateNote = async (token: string, note: { id: number, title: string; cont
   return response.json();
 };
 
-const deleteNote = async (token: string, noteID: string) => {
+const deleteNote = async (token: string, noteID: number) => {
   const id = getID(token);
   const response = await fetch(`${BASE_URL}/notes?user=${id}&note=${noteID}`, {
     method: "DELETE",

@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { deleteNote } from "../../api/notes";
+import { useToast } from "../../context/ToastContext";
 
 type Note = {
   id: number;
@@ -12,6 +14,8 @@ const NotesList: React.FC<{
   onSelect?: (id: number) => void;
 }> = ({notes, selectedId, onSelect }) => {
   const [menuOpenId, setMenuOpenId] = useState<number | null>(null);
+  const { setErrorMessage } = useToast();
+  const { setSuccessMessage } = useToast();
 
   React.useEffect(() => {
     const close = () => setMenuOpenId(null);
@@ -52,7 +56,6 @@ const NotesList: React.FC<{
             style={{
               backgroundColor: selectedId === note.id ? "var(--secondary)" : "var(--light)",
             }}
-            // TODO: note selection logic
             onClick={() => onSelect?.(note.id)}
           >
             <span style={{ color: "white" }}>{note.title}</span>
@@ -79,8 +82,27 @@ const NotesList: React.FC<{
                 <button
                   className="dopdown-item btn"
                   style={{ color: "white" }}
-                  // TODO: delete note logic
-                  onClick={() => { setMenuOpenId(null)} }
+                  onClick={() => { 
+                    setMenuOpenId(null);
+                    const token = localStorage.getItem("token");
+                    if (!token) {
+                      setErrorMessage("You must be logged in to delete notes.");
+                      return;
+                    }
+
+                    if (!note.id) {
+                      setErrorMessage("Note ID is required to delete a note.");
+                      return;
+                    }
+
+                    try {
+                      deleteNote(token, note.id);
+                      setSuccessMessage("Note deleted successfully.");
+                    } catch (error) {
+                      console.error("Failed to delete note:", error);
+                      setErrorMessage("Failed to delete note. Please try again.");
+                    }
+                  }}
                 >
                   delete note
                 </button>

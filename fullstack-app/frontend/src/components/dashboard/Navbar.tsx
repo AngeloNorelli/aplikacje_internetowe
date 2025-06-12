@@ -56,7 +56,7 @@ const Navbar: React.FC = () => {
             type="button"
             onClick={e => {
               e.stopPropagation();
-              setMenuOpen(true);
+              setMenuOpen(open => !open);
             }}
             aria-expanded={menuOpen}
           >

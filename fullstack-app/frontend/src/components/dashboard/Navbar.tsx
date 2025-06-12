@@ -17,6 +17,16 @@ const Navbar: React.FC = () => {
     }
   }
 
+  React.useEffect(() => {
+    const closeMenu = () => setMenuOpen(false);
+    window.addEventListener("click", closeMenu);
+    window.addEventListener("keydown", closeMenu);
+    return () => {
+      window.removeEventListener("keydown", closeMenu);
+      window.removeEventListener("click", closeMenu);
+    }
+  }, []);
+
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
       <div className="container-fluid d-flex justify-content-between align-items-center">
@@ -44,7 +54,10 @@ const Navbar: React.FC = () => {
           <button
             className="btn btn"
             type="button"
-            onClick={() => setMenuOpen(!menuOpen)}
+            onClick={e => {
+              e.stopPropagation();
+              setMenuOpen(true);
+            }}
             aria-expanded={menuOpen}
           >
             <span 

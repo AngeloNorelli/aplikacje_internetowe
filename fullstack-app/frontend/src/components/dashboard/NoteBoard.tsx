@@ -8,7 +8,12 @@ type Note = {
   content?: string;
 };
 
-const NoteBoard: React.FC<{note?: Note}> = ({note}) => {
+type NoteBoardProps = {
+  note?: Note;
+  onNoteEdited?: (note: Note) => void;
+}
+
+const NoteBoard: React.FC<NoteBoardProps> = ({note, onNoteEdited}) => {
   const [id, setId] = useState<number | null>(note?.id ?? null);
   const [title, setTitle] = useState(note?.title ?? "");
   const [content, setContent] = useState(note?.content ?? "");
@@ -51,6 +56,7 @@ const NoteBoard: React.FC<{note?: Note}> = ({note}) => {
     try {
       await updateNote(token, {id, title, content});
       setSuccessMessage("Note updated successfully!");
+      onNoteEdited?.({ id, title, content } as Note);
     } catch (error) {
       setErrorMessage("Failed to update note. Please try again.");
       console.error("Update note error:", error);

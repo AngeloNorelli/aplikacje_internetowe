@@ -25,6 +25,38 @@ const DashboardPage: React.FC = () => {
       .catch(console.error);
   }, []);
 
+  const handleNoteCreated = (note: { id: number, title: string, content?: string }) => {
+    setNotes(prev => [... prev, { ...note, content: note.content ?? "" }]);
+    setSelectedId(note.id);
+  };
+
+  const handleNoteDeleted = (id: number) => {
+    setNotes(prev => prev.filter(note => note.id !== id));
+    setSelectedId(prev => {
+      if (prev === id) {
+        const remaining = notes.filter(note => note.id !== id);
+        return remaining.length > 0 ? remaining[0].id : null;
+      }
+      return prev;
+    });
+  };
+
+  const handleNoteEdited = (note: { id: number, title:string, content?: string }) => {
+    setNotes(prev =>
+      prev.map(n =>
+        n.id === note.id ? { ...n, title: note.title, content: note.content ?? "" } : n
+      )
+    );
+  };
+
+  const handleNoteTitleChanged = (id: number, title: string) => {
+    setNotes(prev =>
+      prev.map(note =>
+        note.id === id ? { ...note, title } : note
+      )
+    );
+  };
+
   const selectedNote = notes.find(note => note.id === selectedId);
 
   return (
@@ -34,9 +66,12 @@ const DashboardPage: React.FC = () => {
         <NotesList
           notes={notes}
           selectedId={selectedId ?? undefined} 
-          onSelect={setSelectedId} 
+          onSelect={setSelectedId}
+          onNoteCreated={handleNoteCreated}
+          onNoteDeleted={handleNoteDeleted}
+          onNoteTitleChanged={handleNoteTitleChanged}
         />
-        <NoteBoard note={selectedNote}/>
+        <NoteBoard note={selectedNote} onNoteEdited={handleNoteEdited}/>
       </div>
     </div>
   );

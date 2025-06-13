@@ -31,7 +31,7 @@
   - POST /notes?user={id}
     * tworzenie notatki - tworzy nową notatkę
     * w body nic nie dostaje związanego z notatką
-    * zwraca id notatki i jej zawartość
+    * zwraca id notatki, tytuł i jej zawartość
   - PUT /notes?user={id}&noteID{id}
     * edycja notatki id
     * w body dostaje całą zawartość notatki

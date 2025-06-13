@@ -8,12 +8,25 @@ type Note = {
   content?: string;
 };
 
-const NotesList: React.FC<{
+type NotesListProps = {
   notes: Note[];
   selectedId?: number;
   onSelect?: (id: number) => void;
-  onNoteCreated?: () => void;
-}> = ({notes, selectedId, onSelect, onNoteCreated }) => {
+  onNoteCreated?: (note: Note) => void;
+  onNoteDeleted?: (id: number) => void;
+  onNoteTitleChanged?: (id: number, title: string) => void;
+}
+
+const NotesList: React.FC<
+  NotesListProps
+> = ({
+  notes, 
+  selectedId, 
+  onSelect, 
+  onNoteCreated, 
+  onNoteDeleted, 
+  onNoteTitleChanged
+}) => {
   const [menuOpenId, setMenuOpenId] = useState<number | null>(null);
   const [showModal, setShowModal] = useState(false);
   const [modalMode, setModalMode] = useState<"create" | "edit">("create");
@@ -47,15 +60,17 @@ const NotesList: React.FC<{
       return;
     }
     try {
+      let response;
       if (modalMode === "create") {
-        await createNote(token, {title: newTitle});
+        response = await createNote(token, {title: newTitle});    
+        onNoteCreated?.(response as Note);
         setSuccessMessage("Note created successfully.");
       } else if (modalMode === "edit") {
         await changeNoteTitle(token, { id: editNoteId!, title: newTitle });
+        onNoteTitleChanged?.(editNoteId!, newTitle);
         setSuccessMessage("Note title updated successfully.");
       }
       setShowModal(false);
-      onNoteCreated?.();
     } catch (error) {
       console.error("Failed to create note:", error);
       setErrorMessage("Failed to create note. Please try again.");
@@ -142,6 +157,7 @@ const NotesList: React.FC<{
 
                     try {
                       deleteNote(token, note.id);
+                      onNoteDeleted?.(note.id);
                       setSuccessMessage("Note deleted successfully.");
                     } catch (error) {
                       console.error("Failed to delete note:", error);

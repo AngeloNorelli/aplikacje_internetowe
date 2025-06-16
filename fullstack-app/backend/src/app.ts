@@ -1,5 +1,7 @@
 import express from "express";
 import cors from "cors";
+import { connectToDatabase } from "./db/database";
+import authRoutes from "./routes/authRoutes";
 
 const app = express();
 const PORT = process.env.PORT ?? 5000;
@@ -10,6 +12,9 @@ app.use(cors({
   credentials: true,
 }));
 
+connectToDatabase();
+
+app.use("/register", authRoutes);
 app.use(express.json());
 
 app.get("/", (req, res) => {

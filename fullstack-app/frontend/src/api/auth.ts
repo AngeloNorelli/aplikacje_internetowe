@@ -1,7 +1,7 @@
 const BASE_URL = import.meta.env.VITE_BACKEND_URL ?? "http://localhost:5000";
 
 const login = async (username: string, password: string) => {
-  const response = await fetch(`${BASE_URL}/auth`, {
+  const response = await fetch(`${BASE_URL}/login`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
@@ -16,11 +16,11 @@ const login = async (username: string, password: string) => {
     throw new Error("Invalid username or password");
   }
 
-const data = await response.json();
-const token = data.token;
+  const data = await response.json();
+  const token = data.token;
   if (!token) {
     throw new Error("Login failed. Please try again.");
-  }
+  } else localStorage.setItem("token", token);
 
   return token;
 };

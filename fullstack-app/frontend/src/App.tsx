@@ -18,6 +18,10 @@ const App: React.FC = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<DashboardPage />} />
+          {/* TODO
+            /settings
+            /profile
+          */}
         </Routes>
       </ToastProvider>
     </Router>

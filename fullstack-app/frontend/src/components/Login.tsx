@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useToast } from "../context/ToastContext";
 import { Link, useNavigate } from "react-router-dom";
-import { login } from "../api/api";
+import { login } from "../api/auth";
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState("");

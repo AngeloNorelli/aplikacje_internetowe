@@ -1,6 +1,6 @@
 import { Sequelize } from "sequelize";
 
-export const sequelize = new Sequelize("fullstack_app", "app_user", "secure_password", {
+export const sequelize = new Sequelize("fullstack_app", "app_user", "Super$trongP4ssword!", {
     host: "localhost",
     dialect: "mysql",
 });

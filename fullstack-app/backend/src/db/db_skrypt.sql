@@ -1,13 +1,13 @@
 CREATE DATABASE fullstack_app;
 USE fullstack_app;
 
-CREATE USER 'app_user'@'localhost' IDENTIFIED BY 'secure_password';
+CREATE USER 'app_user'@'localhost' IDENTIFIED BY 'Super$trongP4ssword!';
 GRANT ALL PRIVILEGES ON fullstack_app.* TO 'app_user'@'localhost';
 FLUSH PRIVILEGES;
 
 CREATE TABLE user (
  id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
- username VARCHAR(255) NOT NULL,
+ username VARCHAR(255) NOT NULL UNIQUE,
  email VARCHAR(255) NOT NULL UNIQUE,
  password VARCHAR(255) NOT NULL
 );

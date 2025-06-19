@@ -14,12 +14,13 @@ app.use(cors({
 
 connectToDatabase();
 
-app.use("/register", authRoutes);
 app.use(express.json());
+app.use("/", authRoutes);
 
 app.get("/", (req, res) => {
   res.json({ status: "Twoja MaMa" });
 });
+
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
 });

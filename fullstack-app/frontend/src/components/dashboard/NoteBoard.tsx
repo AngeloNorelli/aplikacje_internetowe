@@ -1,15 +1,75 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+import { updateNote } from "../../api/notes";
+import { useToast } from "../../context/ToastContext";
 
-const NoteBoard: React.FC = () => {
-  const [title, setTitle] = useState("note_1");
-  const [content, setContent] = useState("example note xd");
+type Note = {
+  id: number;
+  title: string;
+  content?: string;
+};
+
+type NoteBoardProps = {
+  note?: Note;
+  onNoteEdited?: (note: Note) => void;
+}
+
+const NoteBoard: React.FC<NoteBoardProps> = ({note, onNoteEdited}) => {
+  const [id, setId] = useState<number | null>(note?.id ?? null);
+  const [title, setTitle] = useState(note?.title ?? "");
+  const [content, setContent] = useState(note?.content ?? "");
+  const { setErrorMessage } = useToast();
+  const { setSuccessMessage } = useToast();
+
+  useEffect(() => {
+    setId(note?.id ?? null);
+    setTitle(note?.title ?? "");
+    setContent(note?.content ?? "");
+  }, [note]);
+
+  if (!note) {
+    return (
+      <div
+      style={{
+        flex: 1,
+        background: "#f5f7fa",
+        height: "calc(100vh - 60px)",
+        padding: "32px 24px"
+      }}
+    >
+      Select a note to view or edit its content.
+    </div>
+    )
+  }
+
+  const handleSave = async () => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      setErrorMessage("You must be logged in to save notes.");
+      return;
+    }
+
+    if (id === null) {
+      setErrorMessage("Note ID is not set. Cannot update note.");
+      return;
+    }
+    
+    try {
+      await updateNote(token, {id, title, content});
+      setSuccessMessage("Note updated successfully!");
+      onNoteEdited?.({ id, title, content } as Note);
+    } catch (error) {
+      setErrorMessage("Failed to update note. Please try again.");
+      console.error("Update note error:", error);
+      return;
+    }
+  }
 
   return (
     <div
       style={{
         flex: 1,
         background: "#f5f7fa",
-        height: "calc(100vh - 56px)",
+        height: "calc(100vh - 60px)",
         padding: "32px 24px"
       }}
     >
@@ -37,6 +97,7 @@ const NoteBoard: React.FC = () => {
               padding: "4px 16px",
               fontSize: 14
             }}
+            onClick={ handleSave }
           >
             save
           </button>
@@ -47,7 +108,7 @@ const NoteBoard: React.FC = () => {
           className="form-control"
           style={{
             width: "100%",
-            height: "calc(100vh - 140px)",
+            height: "calc(100vh - 160px)",
             border: "none",
             background: "transparent",
             fontSize: 18,

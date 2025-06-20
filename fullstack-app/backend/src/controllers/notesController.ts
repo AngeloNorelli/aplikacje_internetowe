@@ -41,7 +41,7 @@ const updateNote = async (req: Request, res: Response) => {
   note.note = content;
   note.title = title;
   await note.save();
-  res.status(200);
+  res.status(200).send({ message: "Note updated successfully." });
 };
 
 const changeNoteTitle = async (req: Request, res: Response) => {

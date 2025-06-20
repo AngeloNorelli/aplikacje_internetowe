@@ -35,10 +35,10 @@ const DashboardPage: React.FC = () => {
     });
   };
 
-  const handleNoteEdited = (note: { id: number, title:string, content?: string }) => {
+  const handleNoteEdited = (note: { id: number, title: string, note?: string }) => {
     setNotes(prev =>
       prev.map(n =>
-        n.id === note.id ? { ...n, title: note.title, content: note.content ?? "" } : n
+        n.id === note.id ? { ...n, title: note.title, content: note.note ?? "" } : n
       )
     );
   };

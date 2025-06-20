@@ -56,7 +56,7 @@ const NoteBoard: React.FC<NoteBoardProps> = ({note, onNoteEdited}) => {
     try {
       await updateNote(token, {id, title, content});
       setSuccessMessage("Note updated successfully!");
-      onNoteEdited?.({ id, title, content } as Note);
+      onNoteEdited?.({ id, title, note: content } as Note);
     } catch (error) {
       setErrorMessage("Failed to update note. Please try again.");
       console.error("Update note error:", error);

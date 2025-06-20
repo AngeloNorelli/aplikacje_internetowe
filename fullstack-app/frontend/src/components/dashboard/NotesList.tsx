@@ -5,7 +5,7 @@ import { useToast } from "../../context/ToastContext";
 type Note = {
   id: number;
   title: string;
-  content?: string;
+  note?: string;
 };
 
 type NotesListProps = {

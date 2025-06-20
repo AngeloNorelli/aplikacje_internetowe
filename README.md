@@ -8,6 +8,7 @@
 | username  | string  | Nazwa użytkownika   |
 | password  | string  | Hasło (zahashowane) |
 | email     | string  | Email               |
+
 ### Tabela notes
 | Pole    | Typ   | Opis              |
 |---------|-------|-------------------|
@@ -18,25 +19,28 @@
 
 ## Backend:
 * endpointy do autentykacji:
-  - POST /auth
+  - POST /login
     * w body dostaje login i hasło
     * zwraca token autoryzacyjny
   - POST /register
     * tworzy nowego użytkownika
     * hashuje hasło
-    * w body dostaje 
+    * w body dostaje nazwę użytkownika, email oraz hasło
 * endpointy do notatek
   - GET /notes?user={id}
-    * lista notatek z całą zawartością
+    * zwraca listę notatek z całą zawartością
   - POST /notes?user={id}
     * tworzenie notatki - tworzy nową notatkę
-    * w body nic nie dostaje związanego z notatką
-    * zwraca id notatki, tytuł i jej zawartość
+    * w body dostaje tytuł notatki
+    * zwraca id notatki, tytuł i sztywno tworzoną nową zawartość
   - PUT /notes?user={id}&noteID{id}
     * edycja notatki id
     * w body dostaje całą zawartość notatki
+  - PATCH /notes?user={id}&noteID{id}
+    * zmienia jedynie nazwę notatki
+    * w body dostaje nowy tytuł notatki
   - DELETE /notes?user={id}&noteID{id}
-    * usunięcie notatki id
+    * usunięcie notatki o podanym w parametrach id
 
 ## Frontend:
 * strona powitalna

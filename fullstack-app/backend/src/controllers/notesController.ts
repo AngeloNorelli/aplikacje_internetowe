@@ -1,13 +1,5 @@
 import { Request, Response } from "express";
 import { Note } from "../model/Note";
-import { User } from "../model/User";
-
-const authorization = (token: string, userID: number) => {
-  if (!token) return false;
-  const user = User.findByPk(userID);
-  if (!user) return false;
-  return true;
-};
 
 const getNotesList = async (req: Request, res: Response) => {
   const userID = Number(req.query.user);

@@ -5,7 +5,7 @@ import { useToast } from "../../context/ToastContext";
 type Note = {
   id: number;
   title: string;
-  content?: string;
+  note?: string;
 };
 
 type NoteBoardProps = {
@@ -16,14 +16,14 @@ type NoteBoardProps = {
 const NoteBoard: React.FC<NoteBoardProps> = ({note, onNoteEdited}) => {
   const [id, setId] = useState<number | null>(note?.id ?? null);
   const [title, setTitle] = useState(note?.title ?? "");
-  const [content, setContent] = useState(note?.content ?? "");
+  const [content, setContent] = useState(note?.note ?? "");
   const { setErrorMessage } = useToast();
   const { setSuccessMessage } = useToast();
 
   useEffect(() => {
     setId(note?.id ?? null);
     setTitle(note?.title ?? "");
-    setContent(note?.content ?? "");
+    setContent(note?.note ?? "");
   }, [note]);
 
   if (!note) {
@@ -56,7 +56,7 @@ const NoteBoard: React.FC<NoteBoardProps> = ({note, onNoteEdited}) => {
     try {
       await updateNote(token, {id, title, content});
       setSuccessMessage("Note updated successfully!");
-      onNoteEdited?.({ id, title, content } as Note);
+      onNoteEdited?.({ id, title, note: content } as Note);
     } catch (error) {
       setErrorMessage("Failed to update note. Please try again.");
       console.error("Update note error:", error);

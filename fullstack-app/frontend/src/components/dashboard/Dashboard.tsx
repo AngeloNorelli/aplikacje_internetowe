@@ -5,7 +5,7 @@ import NoteBoard from "./NoteBoard";
 import * as Notes from "../../api/notes";
 
 const DashboardPage: React.FC = () => {
-  const [notes, setNotes] = useState<{ id: number, title: string, content: string }[]>([]);
+  const [notes, setNotes] = useState<{ id: number, title: string, note: string }[]>([]);
   const [selectedId, setSelectedId] = useState<number | null>(null);
 
   useEffect(() => {
@@ -19,8 +19,8 @@ const DashboardPage: React.FC = () => {
       .catch(console.error);
   }, []);
 
-  const handleNoteCreated = (note: { id: number, title: string, content?: string }) => {
-    setNotes(prev => [... prev, { ...note, content: note.content ?? "" }]);
+  const handleNoteCreated = (note: { id: number, title: string, note?: string }) => {
+    setNotes(prev => [... prev, { ...note, note: note.note ?? "" }]);
     setSelectedId(note.id);
   };
 
@@ -38,7 +38,7 @@ const DashboardPage: React.FC = () => {
   const handleNoteEdited = (note: { id: number, title: string, note?: string }) => {
     setNotes(prev =>
       prev.map(n =>
-        n.id === note.id ? { ...n, title: note.title, content: note.note ?? "" } : n
+        n.id === note.id ? { ...n, title: note.title, note: note.note ?? "" } : n
       )
     );
   };

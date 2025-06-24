@@ -48,6 +48,9 @@ const NotesList: React.FC<
     setShowModal(true);
   }
 
+  const truncate = (str: string, maxLength: number) =>
+    str.length > maxLength ? str.slice(0, maxLength) + "..." : str;
+
   const handleModalSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     const token = localStorage.getItem("token");
@@ -92,7 +95,8 @@ const NotesList: React.FC<
       className="d-flex flex-column w-auto"
       style={{ 
         backgroundColor: "var(--accent)", 
-        color: "white"
+        color: "white",
+        maxWidth: 200,
       }}
     >
       <div className="d-flex justify-content-between align-items-center px-2 pt-2">
@@ -118,7 +122,7 @@ const NotesList: React.FC<
             }}
             onClick={() => onSelect?.(note.id)}
           >
-            <span style={{ color: "white" }}>{note.title}</span>
+            <span style={{ color: "white" }}>{truncate(note.title, 10)}</span>
             <div className="dropdown ms-4 relative">
               <button
                 className="btn btn-sm pl-2"

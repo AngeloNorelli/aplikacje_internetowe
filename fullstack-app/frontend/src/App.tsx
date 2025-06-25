@@ -9,24 +9,27 @@ import Settings from "./components/Settings";
 import { ToastContainer } from "react-toastify";
 import { ToastProvider } from "./context/ToastContext";
 import { LanguageProvider } from "./context/LanguageContext";
+import { FontSizeProvider } from "./context/FontSizeProvicer";
 
 const App: React.FC = () => {
   return (
     <Router>
       <LanguageProvider>
-        <ToastProvider>
-          <ToastContainer position="bottom-left" newestOnTop={true} />
-          <Routes>
-            <Route path="/" element={<Welcome />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/register" element={<Register />} />
-            <Route path="/dashboard" element={<DashboardPage />} />
-            <Route path="/settings" element={<Settings />} />
-            {/* TODO
-              /profile
-            */}
-          </Routes>
-        </ToastProvider>
+        <FontSizeProvider>
+          <ToastProvider>
+            <ToastContainer position="bottom-left" newestOnTop={true} />
+            <Routes>
+              <Route path="/" element={<Welcome />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/register" element={<Register />} />
+              <Route path="/dashboard" element={<DashboardPage />} />
+              <Route path="/settings" element={<Settings />} />
+              {/* TODO
+                /profile
+              */}
+            </Routes>
+          </ToastProvider>
+        </FontSizeProvider>
       </LanguageProvider>
     </Router>
   );

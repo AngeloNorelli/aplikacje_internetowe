@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { updateNote } from "../../api/notes";
 import { useToast } from "../../context/ToastContext";
 import { useLanguage } from "../../context/LanguageContext";
+import { useFontSize } from "../../context/FontSizeProvicer";
 
 type Note = {
   id: number;
@@ -40,6 +41,7 @@ const NoteBoard: React.FC<NoteBoardProps> = ({note, onNoteEdited}) => {
   const { setErrorMessage } = useToast();
   const { setSuccessMessage } = useToast();
   const { language } = useLanguage();
+  const { fontSize } = useFontSize();
 
   useEffect(() => {
     setId(note?.id ?? null);
@@ -133,7 +135,7 @@ const NoteBoard: React.FC<NoteBoardProps> = ({note, onNoteEdited}) => {
             height: "calc(100vh - 160px)",
             border: "none",
             background: "transparent",
-            fontSize: 18,
+            fontSize: fontSize,
             marginTop: 16,
             resize: "none",
             color: "var(--note-color)",

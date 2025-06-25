@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "./dashboard/Navbar";
 import { useLanguage } from "../context/LanguageContext";
+import { useFontSize } from "../context/FontSizeProvicer";
 
-const themes = ["light", "dark"];
 const languages = ["pl", "en"];
-const fontSizes = ["small", "medium", "large"];
 
 const exampleTexts: Record<string, string> = {
   pl: `Przykładowy tekst w języku polskim. Zmień ustawienia, aby zobaczyć różne opcje. Możesz dostosować rozmiar czcionki, motyw kolorystyczny oraz język interfejsu. To jest dłuższy tekst, który pozwala zobaczyć, jak będą wyglądały akapity, nagłówki oraz zwykłe notatki w Twojej aplikacji. Dzięki temu możesz łatwiej wybrać ustawienia, które będą dla Ciebie najwygodniejsze podczas codziennego korzystania z aplikacji do notatek.`,
@@ -19,6 +18,8 @@ const translations = {
     language: "Language",
     fontSize: "Font Size",
     preview: "Preview",
+    fontSizes: ["small", "medium", "large"],
+    themes: ["light", "dark"]
   },
   pl: {
     settings: "Ustawienia",
@@ -27,33 +28,20 @@ const translations = {
     language: "Język",
     fontSize: "Rozmiar czcionki",
     preview: "Podgląd",
+    fontSizes: ["mały", "średni", "duży"],
+    themes: ["jasny", "ciemny"]
   }
 };
 
 const Settings: React.FC = () => {
   const [theme, setTheme] = useState<string>(localStorage.getItem("theme") || "light");
   const { language, setLanguage } = useLanguage();
-  const [fontSize, setFontSize] = useState<string>(localStorage.getItem("fontSize") || "medium");
+  const { fontSize, setFontSize } = useFontSize();
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
   }, [theme]);
-
-  useEffect(() => {
-    localStorage.setItem("language", language);
-  }, [language]);
-
-  useEffect(() => {
-    localStorage.setItem("fontSize", fontSize);
-    let fontSizeValue = "16px";
-    if (fontSize === "small") {
-      fontSizeValue = "14px";
-    } else if (fontSize === "large") {
-      fontSizeValue = "18px";
-    }
-    document.documentElement.style.fontSize = fontSizeValue;
-  }, [fontSize]);
 
   return (
     <div className="min-vh-100">
@@ -79,8 +67,8 @@ const Settings: React.FC = () => {
                   onChange={(e) => setTheme(e.target.value)}
                   style={{ maxWidth: 420 }}
                 >
-                  {themes.map((t) => (
-                    <option key={t} value={t}>{t}</option>
+                  {translations.en.themes.map((t, index) => (
+                    <option key={t} value={t}>{translations[language].themes[index]}</option>
                   ))}
                 </select>
               </div>
@@ -108,11 +96,11 @@ const Settings: React.FC = () => {
                   className="form-select"
                   id="fontSize-select"
                   value={fontSize} 
-                  onChange={(e) => setFontSize(e.target.value)}
+                  onChange={(e) => setFontSize(e.target.value as "small" | "medium" | "large")}
                   style={{ maxWidth: 420 }}
                 >
-                  {fontSizes.map((size) => (
-                    <option key={size} value={size}>{size}</option>
+                  {translations.en.fontSizes.map((size, index) => (
+                    <option key={size} value={size}>{translations[language].fontSizes[index]}</option>
                   ))}
                 </select>
               </div>
@@ -126,7 +114,7 @@ const Settings: React.FC = () => {
                 style={{
                   background: "var(--note-bg)",
                   color: "var(--note-color)",
-                  fontSize: fontSize === "small" ? 14 : fontSize === "large" ? 20 : 16,
+                  fontSize: fontSize,
                   minHeight: 60,
                   border: "none",
                   borderRadius: 8,

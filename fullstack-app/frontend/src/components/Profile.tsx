@@ -68,7 +68,7 @@ const Profile: React.FC = () => {
                             readOnly
                         />
                     </div>
-                    <button type="button" className="btn btn-warning w-100">
+                    <button type="button" className="btn btn-primary w-100">
                         Zmień hasło
                     </button>
                 </form>

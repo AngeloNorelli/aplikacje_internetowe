@@ -12,7 +12,7 @@
 [data-theme="dark"] {
   --primary: #393971;
   --secondary: #464694;
-  --accent: #4b4ba9;
+  --accent: #4a4a9e;
   --light: #5b5bca;
   --note-bg: #404082;
   --note-color: #c6c6e6;
@@ -63,6 +63,28 @@ body .bg-primary {
 
 .card .form-label {
   color: white;
+}
+
+.card .form-select {
+  background-color: var(--primary);
+  color: white;
+  border-color: var(--light);
+  box-shadow: none;
+}
+
+.card .form-select option {
+  background-color: var(--secondary) !important;
+  color: white;
+}
+
+.card .form-select option:focus {
+  background-color: var(--accent) !important;
+  color: white;
+}
+
+.card .form-select option:checked {
+  background-color: var(--primary) !important;
+  color: white !important;
 }
 
 .card .btn-primary {

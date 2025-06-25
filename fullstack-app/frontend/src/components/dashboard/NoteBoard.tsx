@@ -109,6 +109,7 @@ const NoteBoard: React.FC<NoteBoardProps> = ({note, onNoteEdited}) => {
               borderBottom: "2px solid #5c62a6",
               background: "transparent",
               outline: "none",
+              boxShadow: "none",
               color: "var(--note-color)",
               flex: 1
             }}
@@ -139,7 +140,8 @@ const NoteBoard: React.FC<NoteBoardProps> = ({note, onNoteEdited}) => {
             marginTop: 16,
             resize: "none",
             color: "var(--note-color)",
-            outline: "none"
+            outline: "none",
+            boxShadow: "none"
           }}
         />
       </form>

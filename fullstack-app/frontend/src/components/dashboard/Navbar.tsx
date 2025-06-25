@@ -95,7 +95,7 @@ const Navbar: React.FC = () => {
                   backgroundColor: "var(--light)",
                   position: "absolute",
                   top: "101%",
-                  left: "89.7%",
+                  right: 0,
                   minWidth: "130px",
                 }}
             >

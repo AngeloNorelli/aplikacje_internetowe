@@ -131,7 +131,7 @@ const NotesList: React.FC<
                   setMenuOpenId(menuOpenId === note.id ? null : note.id);
                 }}
               >
-                <span style={{ fontWeight: "bold" }}>⋮</span>
+                <span style={{ fontWeight: "bold", color: "white" }}>⋮</span>
               </button>
               <div
                 className={`dropdown-menu dropdown-menu-end shadow${menuOpenId === note.id ? " show" : ""}`}
@@ -140,7 +140,7 @@ const NotesList: React.FC<
                   position: "absolute",
                   top: "-20%",
                   left: "250%",
-                  minWidth: "130px",
+                  minWidth: "150px",
                 }}
               >
                 <button

@@ -68,7 +68,7 @@ const NoteBoard: React.FC<NoteBoardProps> = ({note, onNoteEdited}) => {
     <div
       style={{
         flex: 1,
-        background: "#f5f7fa",
+        background: "var(--note-bg)",
         height: "calc(100vh - 60px)",
         padding: "32px 24px"
       }}
@@ -86,6 +86,7 @@ const NoteBoard: React.FC<NoteBoardProps> = ({note, onNoteEdited}) => {
               borderBottom: "2px solid #5c62a6",
               background: "transparent",
               outline: "none",
+              color: "var(--note-color)",
               flex: 1
             }}
           />
@@ -114,6 +115,7 @@ const NoteBoard: React.FC<NoteBoardProps> = ({note, onNoteEdited}) => {
             fontSize: 18,
             marginTop: 16,
             resize: "none",
+            color: "var(--note-color)",
             outline: "none"
           }}
         />

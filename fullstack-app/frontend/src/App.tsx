@@ -5,6 +5,7 @@ import Welcome from "./components/Welcome";
 import Login from "./components/Login";
 import Register from "./components/Register";
 import DashboardPage from "./components/dashboard/Dashboard";
+import Settings from "./components/Settings";
 import { ToastContainer } from "react-toastify";
 import { ToastProvider } from "./context/ToastContext";
 
@@ -18,8 +19,8 @@ const App: React.FC = () => {
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/settings" element={<Settings />} />
           {/* TODO
-            /settings
             /profile
           */}
         </Routes>

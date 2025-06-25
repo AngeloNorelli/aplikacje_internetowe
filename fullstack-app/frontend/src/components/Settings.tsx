@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "./dashboard/Navbar";
+import { useLanguage } from "../context/LanguageContext";
 
 const themes = ["light", "dark"];
 const languages = ["pl", "en"];
@@ -31,7 +32,7 @@ const translations = {
 
 const Settings: React.FC = () => {
   const [theme, setTheme] = useState<string>(localStorage.getItem("theme") || "light");
-  const [language, setLanguage] = useState<string>(localStorage.getItem("language") || "en");
+  const { language, setLanguage } = useLanguage();
   const [fontSize, setFontSize] = useState<string>(localStorage.getItem("fontSize") || "medium");
 
   useEffect(() => {
@@ -91,7 +92,7 @@ const Settings: React.FC = () => {
                   className="form-select"
                   id="language-select"
                   value={language} 
-                  onChange={(e) => setLanguage(e.target.value)}
+                  onChange={(e) => setLanguage(e.target.value as "pl" | "en")}
                   style={{ maxWidth: 420 }}
                 >
                   {languages.map((lang) => (

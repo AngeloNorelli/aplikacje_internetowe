@@ -2,6 +2,28 @@ import React, { useState } from "react";
 import { useToast } from "../context/ToastContext";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../api/auth";
+import { useLanguage } from "../context/LanguageContext";
+
+const translations = {
+  en: {
+    login: "login",
+    loginButton: "Login",
+    password: "password",
+    register: "Register",
+    loginSuccess: "Login successful!",
+    unknownError: "An unknown error occurred.",
+    noAccountQuestion: "Don't have an account?",
+  },
+  pl: {
+    login: "login",
+    loginButton: "Zaloguj się",
+    password: "hasło",
+    register: "Zarejestruj się",
+    loginSuccess: "Logowanie powiodło się!",
+    unknownError: "Wystąpił nieznany błąd.",
+    noAccountQuestion: "Nie masz konta?",
+  },
+};
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState("");
@@ -9,19 +31,20 @@ const Login: React.FC = () => {
   const { setErrorMessage } = useToast();
   const { setSuccessMessage } = useToast();
   const navigate = useNavigate();
+  const { language } = useLanguage();
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
     try {
       const token = await login(username, password);
-      setSuccessMessage("Login successful!");
+      setSuccessMessage(translations[language].loginSuccess);
       navigate("/dashboard", { state: { token } });
     } catch (error: unknown) {
       if (error instanceof Error) {
         setErrorMessage(error.message);
       } else {
-        setErrorMessage("An unknown error occurred");
+        setErrorMessage(translations[language].unknownError);
       }
     }
   };
@@ -40,7 +63,7 @@ const Login: React.FC = () => {
         <form onSubmit={handleSubmit}>
           <div className="mb-3 text-start">
             <label htmlFor="username" className="form-label ms-2">
-              login
+              {translations[language].login}
             </label>
             <input
               type="text"
@@ -53,7 +76,7 @@ const Login: React.FC = () => {
           </div>
           <div className="mb-3 text-start">
             <label htmlFor="password" className="form-label ms-2">
-              password
+              {translations[language].password}
             </label>
             <input
               type="password"
@@ -65,14 +88,14 @@ const Login: React.FC = () => {
             />
           </div>
           <button type="submit" className="btn btn-primary w-100">
-            Login
+            {translations[language].loginButton}
           </button>
         </form>
         <div className="text-center mt-3">
           <p className="text-muted">
-            Don"t have an account?{" "}
+            {translations[language].noAccountQuestion}{" "}
             <Link to="/register" className="text-decoration-none">
-              Register
+              {translations[language].register}
             </Link>
           </p>
         </div>

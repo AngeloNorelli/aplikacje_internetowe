@@ -2,6 +2,36 @@ import React, { useState } from "react";
 import { useToast } from "../context/ToastContext";
 import { Link, useNavigate } from "react-router-dom";
 import { register } from "../api/auth";
+import { useLanguage } from "../context/LanguageContext";
+
+const translations = {
+  en: {
+    register: "register",
+    email: "email",
+    username: "username",
+    password: "password",
+    repeatPassword: "repeat password",
+    registerButton: "Register",
+    accountCreated: "Account created successfully! You can now log in.",
+    passwordsDoNotMatch: "Passwords do not match!",
+    unknownError: "An unknown error occurred.",
+    accountAlreadyExistsQuestion: "Already have an account?",
+    login: "Login",
+  },
+  pl: {
+    register: "rejestracja",
+    email: "email",
+    username: "nazwa użytkownika",
+    password: "hasło",
+    repeatPassword: "powtórz hasło",
+    registerButton: "Zarejestruj się",
+    accountCreated: "Konto zostało pomyślnie utworzone! Możesz się teraz zalogować.",
+    passwordsDoNotMatch: "Hasła nie pasują do siebie!",
+    unknownError: "Wystąpił nieznany błąd.",
+    accountAlreadyExistsQuestion: "Masz już konto?",
+    login: "Zaloguj się",
+  },
+};
 
 const Register: React.FC = () => {
   const [email, setEmail] = useState("");
@@ -11,24 +41,25 @@ const Register: React.FC = () => {
   const { setErrorMessage } = useToast();
   const { setSuccessMessage } = useToast();
   const navigate = useNavigate();
+  const { language } = useLanguage();
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
 
     if (password !== repeatPassword) {
-      setErrorMessage("Passwords do not match!");
+      setErrorMessage(translations[language].passwordsDoNotMatch);
       return;
     }
 
     try {
       await register(email, username, password);
-      setSuccessMessage("Account created successfully! You can now log in.");
+      setSuccessMessage(translations[language].accountCreated);
       navigate("/login");
     } catch (error: unknown) {
       if (error instanceof Error) {
         setErrorMessage(error.message);
       } else {
-        setErrorMessage("An unknown error occurred");
+        setErrorMessage(translations[language].unknownError);
       }
     }
   };
@@ -47,7 +78,7 @@ const Register: React.FC = () => {
         <form onSubmit={handleSubmit}>
           <div className="mb-3 text-start">
             <label htmlFor="email" className="form-label ms-2">
-              email
+              {translations[language].email}
             </label>
             <input
               type="email"
@@ -60,7 +91,7 @@ const Register: React.FC = () => {
           </div>
           <div className="mb-3 text-start">
             <label htmlFor="username" className="form-label ms-2">
-              username
+              {translations[language].username}
             </label>
             <input
               type="username"
@@ -73,7 +104,7 @@ const Register: React.FC = () => {
           </div>
           <div className="mb-3 text-start">
             <label htmlFor="password" className="form-label ms-2">
-              password
+              {translations[language].password}
             </label>
             <input
               type="password"
@@ -86,7 +117,7 @@ const Register: React.FC = () => {
           </div>
           <div className="mb-3 text-start">
             <label htmlFor="password" className="form-label ms-2">
-              repeat password
+              {translations[language].repeatPassword}
             </label>
             <input
               type="password"
@@ -98,14 +129,14 @@ const Register: React.FC = () => {
             />
           </div>
           <button type="submit" className="btn btn-primary w-100">
-            Register
+            {translations[language].registerButton}
           </button>
         </form>
         <div className="text-center mt-3">
           <p className="text-muted">
-            Already have an account?{" "}
+            {translations[language].accountAlreadyExistsQuestion}{" "}
             <Link to="/login" className="text-decoration-none">
-              Login
+              {translations[language].login}
             </Link>
           </p>
         </div>

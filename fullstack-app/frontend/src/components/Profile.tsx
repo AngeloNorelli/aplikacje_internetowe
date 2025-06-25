@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from "react";
-import {getProfile} from "../api/profile";
+import { getProfile } from "../api/profile";
 
 const Profile: React.FC = () => {
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
+    const [password, setPassword] = useState("");
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -11,13 +12,12 @@ const Profile: React.FC = () => {
             if (!token) return;
 
             try {
-                const res = await getProfile(token);
-                if (!res.ok) throw new Error("Błąd pobierania profilu");
-                const data = await res.json();
+                const data = await getProfile(token);
                 setEmail(data.email);
                 setUsername(data.username);
+                setPassword(data.password);
             } catch (err) {
-                // obsłuż błąd, np. wyświetl komunikat
+                // obsłuż błąd
             }
         };
         fetchProfile();
@@ -64,7 +64,7 @@ const Profile: React.FC = () => {
                             type="password"
                             className="form-control"
                             id="password"
-                            placeholder="Hasło"
+                            value={password} // wyświetl pobrane hasło
                             readOnly
                         />
                     </div>

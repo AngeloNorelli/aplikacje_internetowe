@@ -1,8 +1,27 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import {getProfile} from "../api/profile";
 
 const Profile: React.FC = () => {
-    const navigate = useNavigate();
+    const [email, setEmail] = useState("");
+    const [username, setUsername] = useState("");
+
+    useEffect(() => {
+        const fetchProfile = async () => {
+            const token = localStorage.getItem("token");
+            if (!token) return;
+
+            try {
+                const res = await getProfile(token);
+                if (!res.ok) throw new Error("Błąd pobierania profilu");
+                const data = await res.json();
+                setEmail(data.email);
+                setUsername(data.username);
+            } catch (err) {
+                // obsłuż błąd, np. wyświetl komunikat
+            }
+        };
+        fetchProfile();
+    }, []);
 
     return (
         <div className="d-flex flex-column justify-content-center align-items-center vh-100 bg-primary">
@@ -25,7 +44,7 @@ const Profile: React.FC = () => {
                             type="email"
                             className="form-control"
                             id="email"
-                            placeholder="Email"
+                            value={email}
                             readOnly
                         />
                     </div>
@@ -35,7 +54,7 @@ const Profile: React.FC = () => {
                             type="text"
                             className="form-control"
                             id="login"
-                            placeholder="Login"
+                            value={username}
                             readOnly
                         />
                     </div>

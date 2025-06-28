@@ -1,6 +1,11 @@
 import { Response, Request } from "express";
 import { User } from "../model/User";
 import bcrypt from "bcrypt";
+import dotenv from "dotenv";
+import jwt from "jsonwebtoken";
+
+dotenv.config();
+const JWT_SECRET = process.env.JWT_SECRET as string;
 
 export const getProfile = async (req: Request, res: Response) => {
     try {
@@ -47,7 +52,13 @@ export const updateProfile = async (req: Request, res: Response) => {
         }
         await user.save();
 
-        res.json({ message: "Profile updated" });
+        const token = jwt.sign(
+          { id: user.id, username: user.username, email: user.email }, 
+          JWT_SECRET, 
+          { expiresIn: "6h" }
+        );
+
+        res.json({ message: "Profile updated", token });
     } catch {
         res.status(500).json({ message: "Server error" });
     }

@@ -3,6 +3,7 @@ import cors from "cors";
 import { connectToDatabase } from "./db/database";
 import authRoutes from "./routes/authRoutes";
 import notesRoutes from "./routes/notesRoutes";
+import profileRoutes from "./routes/profileRoutes";
 
 const app = express();
 const PORT = process.env.PORT ?? 5000;
@@ -18,6 +19,7 @@ connectToDatabase();
 app.use(express.json());
 app.use("/", authRoutes);
 app.use("/notes", notesRoutes);
+app.use("/profile", profileRoutes);
 
 app.get("/", (req, res) => {
   res.json({ status: "Twoja MaMa" });

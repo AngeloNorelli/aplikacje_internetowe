@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import { useLanguage } from '../../context/LanguageContext';
@@ -21,20 +21,32 @@ const translations = {
 const Navbar: React.FC = () => {
   const { language } = useLanguage();
   const [menuOpen, setMenuOpen] = useState(false);
+  const [username, setUsername] = useState(false);
   const navigate = useNavigate();
 
-  let username = "Username";
-  const token = localStorage.getItem("token");
-  if (token) {
+  const getUsernameFromToken = () => {
+    const token = localStorage.getItem("token");
+    if (!token) return "Guest";
     try {
-      const decodedToken: any = jwtDecode(token);
-      username = decodedToken.username || "Username";
-    } catch (error) {
-      console.error("Failed to decode token:", error);
+      const decoded: any = jwtDecode(token);
+      return decoded.username || "Guest";
+    } catch {
+      return "Guest";
     }
-  }
+  };
 
-  React.useEffect(() => {
+  useEffect(() => {
+    setUsername(getUsernameFromToken());
+
+    const onLocalTokenUpdate = () => {
+      setUsername(getUsernameFromToken());
+    };
+    window.addEventListener("localTokenUpdate", onLocalTokenUpdate);
+
+    return () => window.removeEventListener("localTokenUpdate", onLocalTokenUpdate);
+  }, []);
+
+  useEffect(() => {
     const closeMenu = () => setMenuOpen(false);
     window.addEventListener("click", closeMenu);
     window.addEventListener("keydown", closeMenu);

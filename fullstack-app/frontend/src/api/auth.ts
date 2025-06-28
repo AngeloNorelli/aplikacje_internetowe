@@ -50,4 +50,9 @@ const register = async (email: string, username: string, password: string) => {
   return data;
 };
 
-export { login, register };
+function setToken(token: string) {
+  localStorage.setItem("token", token);
+  window.dispatchEvent(new Event("localTokenUpdate"));
+}
+
+export { login, register, setToken };

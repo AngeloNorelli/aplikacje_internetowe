@@ -41,6 +41,11 @@
     * w body dostaje nowy tytuł notatki
   - DELETE /notes?user={id}&noteID{id}
     * usunięcie notatki o podanym w parametrach id
+* endpointy do profilu
+  - GET /profile?user=${id}
+    * zwraca login, email, hasło użytkownika na strone profilu po userID
+  - GET /profile/update?user=${id}
+    * powoduje update logonu, emaila, hasła użytkownika 
 
 ## Frontend:
 * strona powitalna
@@ -54,4 +59,6 @@
   - notelist
   - noteblock
 * strona z profilem
+  - profile
 * strina z ustawieniami
+  - settings

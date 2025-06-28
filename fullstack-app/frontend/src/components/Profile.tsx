@@ -4,6 +4,7 @@ import { useToast } from "../context/ToastContext";
 import { useLanguage } from "../context/LanguageContext";
 import { useFontSize } from "../context/FontSizeProvicer";
 import Navbar from "./dashboard/Navbar";
+import { setToken } from "../api/auth";
 
 
 const translations = {
@@ -62,8 +63,9 @@ const Profile: React.FC = () => {
 
     const handleSave = async () => {
         setError("");
-        const token = localStorage.getItem("token");
-        updateProfile(token, newEmail, newUsername, newPassword);
+        const token = localStorage.getItem("token") as string;
+        const data = await updateProfile(token, newEmail, newUsername, newPassword) as any;
+        setToken(data.token);
     };
 
     return (

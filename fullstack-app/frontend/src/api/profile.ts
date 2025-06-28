@@ -41,15 +41,10 @@ const updateProfile = async (token: string, newEmail: string, newUsername: strin
                 password: newPassword
             })
         });
-        if (res.status === 409) {
-            setErrorMessage("Podany email już istnieje w bazie.");
-            return;
-        }
+        if (res.status === 409) throw new Error("Podany email już istnieje w bazie.");
         if (!res.ok) throw new Error("Błąd zapisu profilu");
-        setEmail(newEmail);
-        setUsername(newUsername);
-        setPassword("");
-        setEditMode(false);
+
+        return res.json();
     } catch {
         throw new Error("Wystąpił błąd podczas zapisu.");
     }

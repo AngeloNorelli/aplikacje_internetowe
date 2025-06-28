@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { getProfile, updateProfile } from "../api/profile";
 
 const Profile: React.FC = () => {
@@ -7,11 +8,12 @@ const Profile: React.FC = () => {
     const [password, setPassword] = useState("");
     const [editMode, setEditMode] = useState(false);
 
-    // Stany edycyjne
     const [newEmail, setNewEmail] = useState("");
     const [newUsername, setNewUsername] = useState("");
     const [newPassword, setNewPassword] = useState("");
     const [error, setError] = useState("");
+
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -98,6 +100,13 @@ const Profile: React.FC = () => {
                         </button>
                     )}
                 </form>
+                <button
+                    type="button"
+                    className="btn btn-light w-100 mt-3"
+                    onClick={() => navigate("/dashboard")}
+                >
+                    Powrót na dashboard
+                </button>
             </div>
         </div>
     );

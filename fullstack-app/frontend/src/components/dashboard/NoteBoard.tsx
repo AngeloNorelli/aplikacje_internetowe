@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from "react";
 import { updateNote } from "../../api/notes";
 import { useToast } from "../../context/ToastContext";
+import { useLanguage } from "../../context/LanguageContext";
+import { useFontSize } from "../../context/FontSizeProvicer";
 
 type Note = {
   id: number;
@@ -11,7 +13,26 @@ type Note = {
 type NoteBoardProps = {
   note?: Note;
   onNoteEdited?: (note: Note) => void;
-}
+};
+
+const translations = {
+  en: {
+    select: "Select a note to view or edit its content.",
+    notLoggedError: "You must be logged in to save notes.",
+    noNoteIDerror: "Note ID is not set. Cannot update note.",
+    noteUpdateSuccess: "Note updated successfully!",
+    noteUpdateError: "Failed to update note. Please try again.",
+    save: "save",
+  },
+  pl: {
+    select: "Wybierz notatkę aby zobaczyć i edytować jej zawartość.",
+    notLoggedError: "Mysisz być zalogowany, aby zapisać notatki.",
+    noNoteIDerror: "ID notatki nie jest ustawione. Nie można zaktualizować notatki.",
+    noteUpdateSuccess: "Notatka została pomyślnie zaktualizowana!",
+    noteUpdateError: "Nie udało się zaktualizować notatki. Spróbuj ponownie.",
+    save: "zapisz",
+  }
+};
 
 const NoteBoard: React.FC<NoteBoardProps> = ({note, onNoteEdited}) => {
   const [id, setId] = useState<number | null>(note?.id ?? null);
@@ -19,6 +40,8 @@ const NoteBoard: React.FC<NoteBoardProps> = ({note, onNoteEdited}) => {
   const [content, setContent] = useState(note?.note ?? "");
   const { setErrorMessage } = useToast();
   const { setSuccessMessage } = useToast();
+  const { language } = useLanguage();
+  const { fontSize } = useFontSize();
 
   useEffect(() => {
     setId(note?.id ?? null);
@@ -36,7 +59,7 @@ const NoteBoard: React.FC<NoteBoardProps> = ({note, onNoteEdited}) => {
         padding: "32px 24px"
       }}
     >
-      Select a note to view or edit its content.
+      {translations[language].select}
     </div>
     )
   }
@@ -44,21 +67,21 @@ const NoteBoard: React.FC<NoteBoardProps> = ({note, onNoteEdited}) => {
   const handleSave = async () => {
     const token = localStorage.getItem("token");
     if (!token) {
-      setErrorMessage("You must be logged in to save notes.");
+      setErrorMessage(translations[language].notLoggedError);
       return;
     }
 
     if (id === null) {
-      setErrorMessage("Note ID is not set. Cannot update note.");
+      setErrorMessage(translations[language].noNoteIDerror);
       return;
     }
     
     try {
       await updateNote(token, {id, title, content});
-      setSuccessMessage("Note updated successfully!");
+      setSuccessMessage(translations[language].noteUpdateSuccess);
       onNoteEdited?.({ id, title, note: content } as Note);
     } catch (error) {
-      setErrorMessage("Failed to update note. Please try again.");
+      setErrorMessage(translations[language].noteUpdateError);
       console.error("Update note error:", error);
       return;
     }
@@ -68,7 +91,7 @@ const NoteBoard: React.FC<NoteBoardProps> = ({note, onNoteEdited}) => {
     <div
       style={{
         flex: 1,
-        background: "#f5f7fa",
+        background: "var(--note-bg)",
         height: "calc(100vh - 60px)",
         padding: "32px 24px"
       }}
@@ -86,6 +109,8 @@ const NoteBoard: React.FC<NoteBoardProps> = ({note, onNoteEdited}) => {
               borderBottom: "2px solid #5c62a6",
               background: "transparent",
               outline: "none",
+              boxShadow: "none",
+              color: "var(--note-color)",
               flex: 1
             }}
           />
@@ -99,7 +124,7 @@ const NoteBoard: React.FC<NoteBoardProps> = ({note, onNoteEdited}) => {
             }}
             onClick={ handleSave }
           >
-            save
+            {translations[language].save}
           </button>
         </div>
         <textarea
@@ -111,10 +136,12 @@ const NoteBoard: React.FC<NoteBoardProps> = ({note, onNoteEdited}) => {
             height: "calc(100vh - 160px)",
             border: "none",
             background: "transparent",
-            fontSize: 18,
+            fontSize: fontSize,
             marginTop: 16,
             resize: "none",
-            outline: "none"
+            color: "var(--note-color)",
+            outline: "none",
+            boxShadow: "none"
           }}
         />
       </form>

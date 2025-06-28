@@ -1,8 +1,25 @@
 import React, { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
+import { useLanguage } from '../../context/LanguageContext';
+
+const translations = {
+  en: {
+    notes: "notes",
+    profile: "user profile",
+    settings: "settings",
+    logout: "log out",
+  },
+  pl: {
+    notes: "notatki",
+    profile: "profil użytkownika",
+    settings: "ustawienia",
+    logout: "wyloguj",
+  }
+};
 
 const Navbar: React.FC = () => {
+  const { language } = useLanguage();
   const [menuOpen, setMenuOpen] = useState(false);
   const navigate = useNavigate();
 
@@ -30,18 +47,22 @@ const Navbar: React.FC = () => {
   return (
     <nav className="navbar navbar-expand-lg navbar-dark bg-primary">
       <div className="container-fluid d-flex justify-content-between align-items-center">
-        <div
+        <button
+          type="button"
           style={{
             background: "#fff",
             color: "#222",
             fontWeight: "bold",
             padding: "6px 16px",
             borderRadius: 2,
-            fontSize: 20
+            fontSize: 20,
+            border: "none",
+            cursor: "pointer"
           }}
+          onClick={() => navigate("/dashboard")}
         >
           LOGO
-        </div>
+        </button>
         <div className="d-flex align-items-center">
           <div
             style={{
@@ -74,17 +95,25 @@ const Navbar: React.FC = () => {
                   backgroundColor: "var(--light)",
                   position: "absolute",
                   top: "101%",
-                  left: "89.7%",
+                  right: 0,
                   minWidth: "130px",
                 }}
             >
               <button 
                 className='dropdown-item btn'
                 onClick={() => {
+                  navigate("/dashboard");
+                }}
+              >
+                {translations[language].notes}
+              </button>
+              <button 
+                className='dropdown-item btn'
+                onClick={() => {
                   navigate("/profile");
                 }}
               >
-                user profile
+                {translations[language].profile}
               </button>
               <button 
                 className='dropdown-item btn'
@@ -92,7 +121,7 @@ const Navbar: React.FC = () => {
                   navigate("/settings");
                 }}
               >
-                settings
+                {translations[language].settings}
               </button>
               <button 
                 className='dropdown-item btn'
@@ -101,7 +130,7 @@ const Navbar: React.FC = () => {
                   navigate("/");
                 }}
               >
-                log out
+                {translations[language].logout}
               </button>
             </div>
           )}

@@ -3,6 +3,7 @@ import { updateNote } from "../../api/notes";
 import { useToast } from "../../context/ToastContext";
 import { useLanguage } from "../../context/LanguageContext";
 import { useFontSize } from "../../context/FontSizeProvicer";
+import translations from "../../assets/translations";
 
 type Note = {
   id: number;
@@ -13,25 +14,6 @@ type Note = {
 type NoteBoardProps = {
   note?: Note;
   onNoteEdited?: (note: Note) => void;
-};
-
-const translations = {
-  en: {
-    select: "Select a note to view or edit its content.",
-    notLoggedError: "You must be logged in to save notes.",
-    noNoteIDerror: "Note ID is not set. Cannot update note.",
-    noteUpdateSuccess: "Note updated successfully!",
-    noteUpdateError: "Failed to update note. Please try again.",
-    save: "save",
-  },
-  pl: {
-    select: "Wybierz notatkę aby zobaczyć i edytować jej zawartość.",
-    notLoggedError: "Mysisz być zalogowany, aby zapisać notatki.",
-    noNoteIDerror: "ID notatki nie jest ustawione. Nie można zaktualizować notatki.",
-    noteUpdateSuccess: "Notatka została pomyślnie zaktualizowana!",
-    noteUpdateError: "Nie udało się zaktualizować notatki. Spróbuj ponownie.",
-    save: "zapisz",
-  }
 };
 
 const NoteBoard: React.FC<NoteBoardProps> = ({note, onNoteEdited}) => {

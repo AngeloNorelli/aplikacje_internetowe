@@ -3,35 +3,7 @@ import { useToast } from "../context/ToastContext";
 import { Link, useNavigate } from "react-router-dom";
 import { register } from "../api/auth";
 import { useLanguage } from "../context/LanguageContext";
-
-const translations = {
-  en: {
-    register: "register",
-    email: "email",
-    username: "username",
-    password: "password",
-    repeatPassword: "repeat password",
-    registerButton: "Register",
-    accountCreated: "Account created successfully! You can now log in.",
-    passwordsDoNotMatch: "Passwords do not match!",
-    unknownError: "An unknown error occurred.",
-    accountAlreadyExistsQuestion: "Already have an account?",
-    login: "Login",
-  },
-  pl: {
-    register: "rejestracja",
-    email: "email",
-    username: "nazwa użytkownika",
-    password: "hasło",
-    repeatPassword: "powtórz hasło",
-    registerButton: "Zarejestruj się",
-    accountCreated: "Konto zostało pomyślnie utworzone! Możesz się teraz zalogować.",
-    passwordsDoNotMatch: "Hasła nie pasują do siebie!",
-    unknownError: "Wystąpił nieznany błąd.",
-    accountAlreadyExistsQuestion: "Masz już konto?",
-    login: "Zaloguj się",
-  },
-};
+import translations from "../assets/translations";
 
 const Register: React.FC = () => {
   const [email, setEmail] = useState("");

@@ -2,35 +2,13 @@ import React, { useState, useEffect } from "react";
 import Navbar from "./dashboard/Navbar";
 import { useLanguage } from "../context/LanguageContext";
 import { useFontSize } from "../context/FontSizeProvicer";
+import translations from "../assets/translations";
 
 const languages = ["pl", "en"];
 
 const exampleTexts: Record<string, string> = {
   pl: `Przykładowy tekst w języku polskim. Zmień ustawienia, aby zobaczyć różne opcje. Możesz dostosować rozmiar czcionki, motyw kolorystyczny oraz język interfejsu. To jest dłuższy tekst, który pozwala zobaczyć, jak będą wyglądały akapity, nagłówki oraz zwykłe notatki w Twojej aplikacji. Dzięki temu możesz łatwiej wybrać ustawienia, które będą dla Ciebie najwygodniejsze podczas codziennego korzystania z aplikacji do notatek.`,
   en: `Sample text in English. Change settings to see different options. You can adjust the font size, color theme, and interface language. This is a longer text that lets you see how paragraphs, headings, and regular notes will look in your app. This way, you can easily choose the settings that are most comfortable for you when using the notes app every day.`
-};
-
-const translations = {
-  en: {
-    settings: "Settings",
-    customize: "Customize your experience",
-    theme: "Theme",
-    language: "Language",
-    fontSize: "Font Size",
-    preview: "Preview",
-    fontSizes: ["small", "medium", "large"],
-    themes: ["light", "dark"]
-  },
-  pl: {
-    settings: "Ustawienia",
-    customize: "Dostosuj swoje doświadczenie",
-    theme: "Motyw",
-    language: "Język",
-    fontSize: "Rozmiar czcionki",
-    preview: "Podgląd",
-    fontSizes: ["mały", "średni", "duży"],
-    themes: ["jasny", "ciemny"]
-  }
 };
 
 const Settings: React.FC = () => {
@@ -49,7 +27,7 @@ const Settings: React.FC = () => {
       <div className="container py-5">
         <div className="card shadow mx-auto">
           <h1 className="card-title text-center mb-4" style={{ color: "white" }}>
-            {translations[language].settings}
+            {translations[language].settingBigs}
           </h1>
           <p className="text-center" style={{ color: "white" }}>
             {translations[language].customize}

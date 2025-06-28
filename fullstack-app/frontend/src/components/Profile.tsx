@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { getProfile, updateProfile } from "../api/profile";
 import { useToast } from "../context/ToastContext";
 import { useLanguage } from "../context/LanguageContext";
 import { useFontSize } from "../context/FontSizeProvicer";
+import Navbar from "./dashboard/Navbar";
 
 
 const translations = {
@@ -26,6 +26,7 @@ const translations = {
         password: "Password",
     },
 };
+
 const Profile: React.FC = () => {
     const [email, setEmail] = useState("");
     const [username, setUsername] = useState("");
@@ -41,9 +42,6 @@ const Profile: React.FC = () => {
     const { setSuccessMessage } = useToast();
     const { language } = useLanguage();
     const { fontSize } = useFontSize();
-
-
-    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -70,10 +68,8 @@ const Profile: React.FC = () => {
 
     return (
         <div className="d-flex flex-column justify-content-center align-items-center vh-100 bg-primary">
-            <div className="text-center mb-4">
-                <div className="bg-light d-inline-flex justify-content-center align-items-center" style={{ width: "128px", height: "100px" }}>
-                    <span className="fw-bold">LOGO</span>
-                </div>
+            <div className="w-25">
+                <Navbar />
             </div>
             <div className="card p-4" style={{ width: "24rem" }}>
                 <h1 className="text-center mb-4" style={{ color: "white"}}>
@@ -133,13 +129,6 @@ const Profile: React.FC = () => {
                         </button>
                     )}
                 </form>
-                <button
-                    type="button"
-                    className="btn btn-light w-100 mt-3"
-                    onClick={() => navigate("/dashboard")}
-                >
-                    {translations[language].returnToDashboard}
-                </button>
             </div>
         </div>
     );

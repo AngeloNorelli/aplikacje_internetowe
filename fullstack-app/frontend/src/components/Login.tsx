@@ -3,27 +3,7 @@ import { useToast } from "../context/ToastContext";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../api/auth";
 import { useLanguage } from "../context/LanguageContext";
-
-const translations = {
-  en: {
-    login: "login",
-    loginButton: "Login",
-    password: "password",
-    register: "Register",
-    loginSuccess: "Login successful!",
-    unknownError: "An unknown error occurred.",
-    noAccountQuestion: "Don't have an account?",
-  },
-  pl: {
-    login: "login",
-    loginButton: "Zaloguj się",
-    password: "hasło",
-    register: "Zarejestruj się",
-    loginSuccess: "Logowanie powiodło się!",
-    unknownError: "Wystąpił nieznany błąd.",
-    noAccountQuestion: "Nie masz konta?",
-  },
-};
+import translations from "../assets/translations";
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState("");

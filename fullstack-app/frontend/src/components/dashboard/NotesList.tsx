@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { createNote, changeNoteTitle, deleteNote } from "../../api/notes";
 import { useToast } from "../../context/ToastContext";
 import { useLanguage } from "../../context/LanguageContext";
+import translations from "../../assets/translations";
 
 type Note = {
   id: number;
@@ -16,43 +17,6 @@ type NotesListProps = {
   onNoteCreated?: (note: Note) => void;
   onNoteDeleted?: (id: number) => void;
   onNoteTitleChanged?: (id: number, title: string) => void;
-};
-
-const translations = {
-  en: {
-    notes: "Notes",
-    create: "create Note",
-    delete: "delete Note",
-    changeName: "change Name",
-    noteTitle: "Note Title",
-    noteTitlePlaceholder: "Enter note title",
-    cancel: "cancel",
-    save: "save",
-    noteCreated: "Note created successfully.",
-    noteDeleted: "Note deleted successfully.",
-    noteTitleUpdated: "Note title updated successfully.",
-    notLoggedIn: "You must be logged in to perform this action.",
-    emptyTitle: "Note title cannot be empty.",
-    noteCreateError: "Failed to create note. Please try again.",
-    noteDeleteError: "Failed to delete note. Please try again.",
-  },
-  pl: {
-    notes: "Notatki",
-    create: "utwórz notatkę",
-    delete: "usuń notatkę",
-    changeName: "amień nazwę",
-    noteTitle: "Tytuł notatki",
-    noteTitlePlaceholder: "Wprowadź tytuł notatki",
-    cancel: "anuluj",
-    save: "zapisz",
-    noteCreated: "Notatka została pomyślnie utworzona.",
-    noteDeleted: "Notatka została pomyślnie usunięta.",
-    noteTitleUpdated: "Tytuł notatki został pomyślnie zaktualizowany.",
-    notLoggedIn: "Musisz być zalogowany, aby wykonać tę czynność.",
-    emptyTitle: "Tytuł notatki nie może być pusty.",
-    noteCreateError: "Nie udało się utworzyć notatki. Spróbuj ponownie.",
-    noteDeleteError: "Nie udało się usunąć notatki. Spróbuj ponownie.",
-  }
 };
 
 const NotesList: React.FC<

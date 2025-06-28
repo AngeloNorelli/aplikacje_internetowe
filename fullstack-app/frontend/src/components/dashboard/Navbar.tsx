@@ -2,21 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
 import { useLanguage } from '../../context/LanguageContext';
-
-const translations = {
-  en: {
-    notes: "notes",
-    profile: "user profile",
-    settings: "settings",
-    logout: "log out",
-  },
-  pl: {
-    notes: "notatki",
-    profile: "profil użytkownika",
-    settings: "ustawienia",
-    logout: "wyloguj",
-  }
-};
+import translations from '../../assets/translations';
 
 const Navbar: React.FC = () => {
   const { language } = useLanguage();

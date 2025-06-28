@@ -5,34 +5,7 @@ import { useLanguage } from "../context/LanguageContext";
 import { useFontSize } from "../context/FontSizeProvicer";
 import Navbar from "./dashboard/Navbar";
 import { setToken } from "../api/auth";
-
-
-const translations = {
-    pl: {
-        userProfile: "Profil użytkownika",
-        editProfile: "Edytuj profil",
-        saveChanges: "Zapisz zmiany",
-        returnToDashboard: "Powrót na główny panel",
-        cancel: "Anuluj",
-        newPassword: "Nowe hasło",
-        password: "Hasło",
-        noTokenError: "Brak tokenu. Nie można pobrać profilu.",
-        updatePrifleSuccess: "Profil został pomyślnie zaktualizowany!",
-        updateProfileError: "Nie udało się zaktualizować profilu. Spróbuj ponownie.",
-      },
-    en: {
-        userProfile: "User profile",
-        editProfile: "Edit profile",
-        saveChanges: "Save changes",
-        returnToDashboard: "Return to dashboard",
-        cancel: "Cancel",
-        newPassword: "New password",
-        password: "Password",
-        noTokenError: "No token found. Cannot fetch profile.",
-        updatePrifleSuccess: "Profile updated successfully!",
-        updateProfileError: "Failed to update profile. Please try again.",
-    },
-};
+import translations from "../assets/translations";
 
 const Profile: React.FC = () => {
     const [email, setEmail] = useState("");
@@ -117,7 +90,7 @@ const Profile: React.FC = () => {
                         />
                     </div>
                     <div className="mb-3">
-                        <label className="form-label" htmlFor="password" style={{ fontSize: fontSize}}>{translations[language].password}</label>
+                        <label className="form-label" htmlFor="password" style={{ fontSize: fontSize}}>{translations[language].passwordBig}</label>
                         <input
                             type="password"
                             className="form-control"
@@ -135,7 +108,7 @@ const Profile: React.FC = () => {
                                 {translations[language].saveChanges}
                             </button>
                             <button type="button" className="btn btn-secondary w-100" style={{ fontSize: fontSize}}onClick={() => setEditMode(false)}>
-                                {translations[language].cancel}
+                                {translations[language].cancelBig}
                             </button>
                         </>
                     ) : (

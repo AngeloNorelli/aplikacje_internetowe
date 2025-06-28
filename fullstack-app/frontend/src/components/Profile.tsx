@@ -16,7 +16,10 @@ const translations = {
         cancel: "Anuluj",
         newPassword: "Nowe hasło",
         password: "Hasło",
-    },
+        noTokenError: "Brak tokenu. Nie można pobrać profilu.",
+        updatePrifleSuccess: "Profil został pomyślnie zaktualizowany!",
+        updateProfileError: "Nie udało się zaktualizować profilu. Spróbuj ponownie.",
+      },
     en: {
         userProfile: "User profile",
         editProfile: "Edit profile",
@@ -25,6 +28,9 @@ const translations = {
         cancel: "Cancel",
         newPassword: "New password",
         password: "Password",
+        noTokenError: "No token found. Cannot fetch profile.",
+        updatePrifleSuccess: "Profile updated successfully!",
+        updateProfileError: "Failed to update profile. Please try again.",
     },
 };
 
@@ -64,8 +70,15 @@ const Profile: React.FC = () => {
     const handleSave = async () => {
         setError("");
         const token = localStorage.getItem("token") as string;
-        const data = await updateProfile(token, newEmail, newUsername, newPassword) as any;
-        setToken(data.token);
+        if (!token) setErrorMessage(translations[language].noTokenError);
+        try {
+          const data = await updateProfile(token, newEmail, newUsername, newPassword) as any;
+          setToken(data.token);
+          setSuccessMessage(translations[language].updatePrifleSuccess);
+        } catch (error) {
+          console.error("Update profile error:", error);
+          setErrorMessage(translations[language].updateProfileError);
+        }        
     };
 
     return (

@@ -106,9 +106,9 @@ Note (id, userID, title, note)
     * usunięcie notatki o podanym w parametrach id
 * endpointy do użytkownika:
   - GET `/profile?user={id}`
-    * wysyła wszystkie informacje o profilu użytkownika
+    * zwraca login, email, hasło użytkownika na strone profilu po userID
   - PATCH `/profile/update?user={id}`
-    * aktualizuje dane użytkownika
+    * aktualizuje dane użytkownika: loginu, emaila, hasła użytkownika 
     * odsyła nowo wygenerowany token
 
 ### Frontend (React):

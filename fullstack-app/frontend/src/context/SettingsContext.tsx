@@ -62,13 +62,20 @@ export const SettingsProvider: React.FC<{ children: React.ReactNode }> = ({ chil
   }, [language]);
 
   useEffect(() => {
-    const interval = setInterval(() => {
+    const updateSettingsFromToken = () => {
       const { theme: t, fontSize: f, language: l } = getSettingsFromToken();
-      setTheme(prev => prev !== t ? t : prev);
-      setFontSize(prev => prev !== f ? f : prev);
-      setLanguage(prev => prev !== l ? l : prev);
-    }, 1000);
-    return () => clearInterval(interval);
+      setTheme(t);
+      setFontSize(f);
+      setLanguage(l);
+    };
+
+    window.addEventListener("localTokenUpdate", updateSettingsFromToken);
+
+    updateSettingsFromToken();
+
+    return () => {
+      window.removeEventListener("localTokenUpdate", updateSettingsFromToken);
+    };
   }, []);
 
   return (

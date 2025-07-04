@@ -137,6 +137,7 @@ const Settings: React.FC = () => {
                         language: formLanguage,
                       });
                       setSuccessMessage(translations[language].settingsUpdateSuccess);
+                      window.dispatchEvent(new Event("localTokenUpdate"));
                     } catch (error) {
                       console.error("Update settings error:", error);
                       setErrorMessage(translations[language].settingsUpdateError);

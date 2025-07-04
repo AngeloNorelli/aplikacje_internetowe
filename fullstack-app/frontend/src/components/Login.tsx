@@ -19,6 +19,7 @@ const Login: React.FC = () => {
     try {
       const token = await login(username, password);
       setSuccessMessage(translations[language].loginSuccess);
+      window.dispatchEvent(new Event("localTokenUpdate"));
       navigate("/dashboard", { state: { token } });
     } catch (error: unknown) {
       if (error instanceof Error) {

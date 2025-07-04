@@ -51,6 +51,7 @@ const Profile: React.FC = () => {
           const data = await updateProfile(token, newEmail, newUsername, newPassword) as any;
           setToken(data.token);
           setSuccessMessage(translations[language].updatePrifleSuccess);
+          window.dispatchEvent(new Event("localTokenUpdate"));
         } catch (error) {
           console.error("Update profile error:", error);
           setErrorMessage(translations[language].updateProfileError);

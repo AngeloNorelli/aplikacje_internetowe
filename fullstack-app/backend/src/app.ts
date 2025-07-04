@@ -4,6 +4,7 @@ import { connectToDatabase } from "./db/database";
 import authRoutes from "./routes/authRoutes";
 import notesRoutes from "./routes/notesRoutes";
 import profileRoutes from "./routes/profileRoutes";
+import settingRoutes from "./routes/settingRoutes";
 
 const app = express();
 const PORT = process.env.PORT ?? 5000;
@@ -20,6 +21,7 @@ app.use(express.json());
 app.use("/", authRoutes);
 app.use("/notes", notesRoutes);
 app.use("/profile", profileRoutes);
+app.use("/settings", settingRoutes);
 
 app.get("/", (req, res) => {
   res.json({ status: "Twoja MaMa" });

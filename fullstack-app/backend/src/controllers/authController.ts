@@ -52,7 +52,14 @@ export const login = async (req: Request, res: Response) => {
     }
 
     const token = jwt.sign(
-      { id: user.id, username: user.username, email: user.email }, 
+      { 
+        id: user.id, username: 
+        user.username, 
+        email: user.email,
+        theme: user.theme,
+        font_size: user.font_size,
+        language: user.language
+      }, 
       JWT_SECRET, 
       { expiresIn: "6h" }
     );

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { createNote, changeNoteTitle, deleteNote } from "../../api/notes";
 import { useToast } from "../../context/ToastContext";
-import { useLanguage } from "../../context/LanguageContext";
+import { useSettings } from "../../context/SettingsContext";
 import translations from "../../assets/translations";
 
 type Note = {
@@ -36,7 +36,7 @@ const NotesList: React.FC<
   const [newTitle, setNewTitle] = useState("");
   const { setErrorMessage } = useToast();
   const { setSuccessMessage } = useToast();
-  const { language } = useLanguage();
+  const { language } = useSettings();
 
   const handleCreateNote = () => {
     setModalMode("create");

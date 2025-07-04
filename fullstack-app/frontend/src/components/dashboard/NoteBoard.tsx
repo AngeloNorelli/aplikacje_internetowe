@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { updateNote } from "../../api/notes";
 import { useToast } from "../../context/ToastContext";
-import { useLanguage } from "../../context/LanguageContext";
-import { useFontSize } from "../../context/FontSizeProvicer";
+import { useSettings } from "../../context/SettingsContext";
 import translations from "../../assets/translations";
 
 type Note = {
@@ -22,8 +21,8 @@ const NoteBoard: React.FC<NoteBoardProps> = ({note, onNoteEdited}) => {
   const [content, setContent] = useState(note?.note ?? "");
   const { setErrorMessage } = useToast();
   const { setSuccessMessage } = useToast();
-  const { language } = useLanguage();
-  const { fontSize } = useFontSize();
+  const { language } = useSettings();
+  const { fontSize } = useSettings();
 
   useEffect(() => {
     setId(note?.id ?? null);

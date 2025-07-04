@@ -4,6 +4,10 @@ import { useNavigate } from "react-router-dom";
 const Welcome: React.FC = () => {
   const navigate = useNavigate();
 
+  React.useEffect(() => {
+    document.title = "2Note - Welcome";
+  }, []);
+
   return (
     <div className="d-flex flex-column justify-content-center align-items-center vh-100 bg-primary">
       <div className="text-center mb-4">

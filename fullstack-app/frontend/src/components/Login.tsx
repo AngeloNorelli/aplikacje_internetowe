@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useToast } from "../context/ToastContext";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../api/auth";
-import { useLanguage } from "../context/LanguageContext";
+import { useSettings } from "../context/SettingsContext";
 import translations from "../assets/translations";
 
 const Login: React.FC = () => {
@@ -11,7 +11,7 @@ const Login: React.FC = () => {
   const { setErrorMessage } = useToast();
   const { setSuccessMessage } = useToast();
   const navigate = useNavigate();
-  const { language } = useLanguage();
+  const { language } = useSettings();
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
@@ -19,6 +19,7 @@ const Login: React.FC = () => {
     try {
       const token = await login(username, password);
       setSuccessMessage(translations[language].loginSuccess);
+      window.dispatchEvent(new Event("localTokenUpdate"));
       navigate("/dashboard", { state: { token } });
     } catch (error: unknown) {
       if (error instanceof Error) {
@@ -28,6 +29,10 @@ const Login: React.FC = () => {
       }
     }
   };
+
+  useEffect(() => {
+    document.title = "2Note - Login";
+  }, []);
 
   return (
     <div className="d-flex flex-column justify-content-center align-items-center vh-100 bg-primary">

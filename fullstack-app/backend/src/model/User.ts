@@ -6,6 +6,9 @@ interface UserAttributes {
   username: string;
   email: string;
   password: string;
+  theme?: "dark" | "light";
+  font_size?: "small" | "medium" | "large";
+  language?: "pl" | "en";
 }
 
 interface UserCreationAttributes extends Optional<UserAttributes, "id"> {}
@@ -15,6 +18,9 @@ class User extends Model<UserAttributes, UserCreationAttributes> implements User
   public username!: string;
   public email!: string;
   public password!: string;
+  public theme?: "dark" | "light";
+  public font_size?: "small" | "medium" | "large";
+  public language?: "pl" | "en";
 }
 
 User.init(
@@ -37,6 +43,18 @@ User.init(
     password: {
       type: DataTypes.STRING,
       allowNull: false,
+    },
+    theme: {
+      type: DataTypes.ENUM("dark", "light"),
+      defaultValue: "dark",
+    },
+    font_size: {
+      type: DataTypes.ENUM("small", "medium", "large"),
+      defaultValue: "large",
+    },
+    language: {
+      type: DataTypes.ENUM("pl", "en"),
+      defaultValue: "en",
     },
   },
   {

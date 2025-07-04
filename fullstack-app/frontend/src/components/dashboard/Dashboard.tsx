@@ -9,6 +9,10 @@ const DashboardPage: React.FC = () => {
   const [selectedId, setSelectedId] = useState<number | null>(null);
 
   useEffect(() => {
+    document.title = "2Note - Dashboard";
+  }, []);
+
+  useEffect(() => {
     const token = localStorage.getItem("token");
     if (!token) return;
     Notes.getNotesList(token)

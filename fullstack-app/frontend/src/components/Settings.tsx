@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import Navbar from "./dashboard/Navbar";
-import { useLanguage } from "../context/LanguageContext";
-import { useFontSize } from "../context/FontSizeProvicer";
+import { useSettings } from "../context/SettingsContext";
 import translations from "../assets/translations";
+import { updateSettings } from "../api/settings";
+import { useToast } from "../context/ToastContext";
 
 const languages = ["pl", "en"];
 
@@ -12,14 +13,24 @@ const exampleTexts: Record<string, string> = {
 };
 
 const Settings: React.FC = () => {
-  const [theme, setTheme] = useState<string>(localStorage.getItem("theme") || "light");
-  const { language, setLanguage } = useLanguage();
-  const { fontSize, setFontSize } = useFontSize();
+  const { theme, setTheme } = useSettings();
+  const { language, setLanguage } = useSettings();
+  const { fontSize, setFontSize } = useSettings();
+
+  const [formTheme, setFormTheme] = useState(theme);
+  const [formLanguage, setFormLanguage] = useState(language);
+  const [formFontSize, setFormFontSize] = useState(fontSize);
+
+  const { setErrorMessage, setSuccessMessage } = useToast();
 
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("theme", theme);
   }, [theme]);
+
+  useEffect(() => {
+    document.title = "2Note - Settings";
+  }, []);
 
   return (
     <div className="min-vh-100">
@@ -41,8 +52,8 @@ const Settings: React.FC = () => {
                 <select
                   className="form-select"
                   id="theme-select"
-                  value={theme}
-                  onChange={(e) => setTheme(e.target.value)}
+                  value={formTheme}
+                  onChange={(e) => setFormTheme(e.target.value as "dark" | "light")}
                   style={{ maxWidth: 420 }}
                 >
                   {translations.en.themes.map((t, index) => (
@@ -57,8 +68,8 @@ const Settings: React.FC = () => {
                 <select 
                   className="form-select"
                   id="language-select"
-                  value={language} 
-                  onChange={(e) => setLanguage(e.target.value as "pl" | "en")}
+                  value={formLanguage} 
+                  onChange={(e) => setFormLanguage(e.target.value as "pl" | "en")}
                   style={{ maxWidth: 420 }}
                 >
                   {languages.map((lang) => (
@@ -73,8 +84,8 @@ const Settings: React.FC = () => {
                 <select
                   className="form-select"
                   id="fontSize-select"
-                  value={fontSize} 
-                  onChange={(e) => setFontSize(e.target.value as "small" | "medium" | "large")}
+                  value={formFontSize} 
+                  onChange={(e) => setFormFontSize(e.target.value as "small" | "medium" | "large")}
                   style={{ maxWidth: 420 }}
                 >
                   {translations.en.fontSizes.map((size, index) => (
@@ -83,23 +94,59 @@ const Settings: React.FC = () => {
                 </select>
               </div>
             </form>
-            <div className="mt-1" style={{ width: "60%" }}>
-              <div className="mb-2 text-start" style={{ color: "white" }}>
-                {translations[language].preview} :
+            <div 
+              className="d-flex flex-column" 
+              style={{ width: "60%", height: "100%" }}
+            >
+              <div className="mt-1">
+                <div className="mb-2 text-start" style={{ color: "white" }}>
+                  {translations[language].preview} :
+                </div>
+                <div
+                  className="form-control"
+                  style={{
+                    background: formTheme === "dark" ? "#404082": "#f0f0f0",
+                    color: formTheme === "dark" ? "#c6c6e6" : "#343440",
+                    fontSize: formFontSize,
+                    minHeight: 60,
+                    border: "none",
+                    borderRadius: 8,
+                  }}
+                >
+                  {exampleTexts[formLanguage]}
+                </div>
               </div>
-              <div
-                className="form-control"
-                style={{
-                  background: "var(--note-bg)",
-                  color: "var(--note-color)",
-                  fontSize: fontSize,
-                  minHeight: 60,
-                  border: "none",
-                  borderRadius: 8,
+              <button
+                type="button"
+                className="btn btn-primary mt-3"
+                style={{ alignSelf: "flex-end" }}
+                onClick={async () => {
+                  setTheme(formTheme);
+                  setLanguage(formLanguage);
+                  setFontSize(formFontSize);
+                  localStorage.setItem("theme", formTheme);
+                  localStorage.setItem("language", formLanguage);
+                  localStorage.setItem("fontSize", formFontSize);
+
+                  const token = localStorage.getItem("token");
+                  if (token) {
+                    try {
+                      await updateSettings(token, {
+                        theme: formTheme,
+                        font_size: formFontSize,
+                        language: formLanguage,
+                      });
+                      setSuccessMessage(translations[language].settingsUpdateSuccess);
+                      window.dispatchEvent(new Event("localTokenUpdate"));
+                    } catch (error) {
+                      console.error("Update settings error:", error);
+                      setErrorMessage(translations[language].settingsUpdateError);
+                    }
+                  }
                 }}
               >
-                {exampleTexts[language]}
-              </div>
+                {translations[language].save}
+              </button>
             </div>
           </div>
         </div>

@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { jwtDecode } from 'jwt-decode';
-import { useLanguage } from '../../context/LanguageContext';
+import { useSettings } from '../../context/SettingsContext';
 import translations from '../../assets/translations';
 
 const Navbar: React.FC = () => {
-  const { language } = useLanguage();
+  const { language } = useSettings();
   const [menuOpen, setMenuOpen] = useState(false);
   const [username, setUsername] = useState(false);
   const navigate = useNavigate();

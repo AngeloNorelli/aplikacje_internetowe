@@ -9,30 +9,24 @@ import Settings from "./components/Settings";
 import Profile from "./components/Profile";
 import { ToastContainer } from "react-toastify";
 import { ToastProvider } from "./context/ToastContext";
-import { LanguageProvider } from "./context/LanguageContext";
-import { FontSizeProvider } from "./context/FontSizeProvicer";
+import { SettingsProvider } from "./context/SettingsContext";
 
 const App: React.FC = () => {
   return (
     <Router>
-      <LanguageProvider>
-        <FontSizeProvider>
-          <ToastProvider>
-            <ToastContainer position="bottom-left" newestOnTop={true} />
-            <Routes>
-              <Route path="/" element={<Welcome />} />
-              <Route path="/login" element={<Login />} />
-              <Route path="/register" element={<Register />} />
-              <Route path="/dashboard" element={<DashboardPage />} />
-              <Route path="/profile" element={<Profile />} />
-              <Route path="/settings" element={<Settings />} />
-              {/* TODO
-                /profile
-              */}
-            </Routes>
-          </ToastProvider>
-        </FontSizeProvider>
-      </LanguageProvider>
+      <SettingsProvider>
+        <ToastProvider>
+          <ToastContainer position="bottom-left" newestOnTop={true} />
+          <Routes>
+            <Route path="/" element={<Welcome />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/register" element={<Register />} />
+            <Route path="/dashboard" element={<DashboardPage />} />
+            <Route path="/profile" element={<Profile />} />
+            <Route path="/settings" element={<Settings />} />
+          </Routes>
+        </ToastProvider>
+      </SettingsProvider>
     </Router>
   );
 };

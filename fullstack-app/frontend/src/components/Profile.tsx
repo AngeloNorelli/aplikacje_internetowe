@@ -1,8 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { getProfile, updateProfile } from "../api/profile";
 import { useToast } from "../context/ToastContext";
-import { useLanguage } from "../context/LanguageContext";
-import { useFontSize } from "../context/FontSizeProvicer";
+import { useSettings } from "../context/SettingsContext";
 import Navbar from "./dashboard/Navbar";
 import { setToken } from "../api/auth";
 import translations from "../assets/translations";
@@ -20,8 +19,8 @@ const Profile: React.FC = () => {
 
     const { setErrorMessage } = useToast();
     const { setSuccessMessage } = useToast();
-    const { language } = useLanguage();
-    const { fontSize } = useFontSize();
+    const { language } = useSettings();
+    const { fontSize } = useSettings();
 
     useEffect(() => {
         const fetchProfile = async () => {
@@ -40,6 +39,10 @@ const Profile: React.FC = () => {
         fetchProfile();
     }, []);
 
+  useEffect(() => {
+    document.title = "2Note - Profile";
+  }, []);
+
     const handleSave = async () => {
         setError("");
         const token = localStorage.getItem("token") as string;
@@ -48,6 +51,7 @@ const Profile: React.FC = () => {
           const data = await updateProfile(token, newEmail, newUsername, newPassword) as any;
           setToken(data.token);
           setSuccessMessage(translations[language].updatePrifleSuccess);
+          window.dispatchEvent(new Event("localTokenUpdate"));
         } catch (error) {
           console.error("Update profile error:", error);
           setErrorMessage(translations[language].updateProfileError);

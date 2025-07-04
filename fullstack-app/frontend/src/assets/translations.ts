@@ -55,6 +55,8 @@ const translations = {
     emptyTitle: "Note title cannot be empty.",
     noteCreateError: "Failed to create note. Please try again.",
     noteDeleteError: "Failed to delete note. Please try again.",
+    settingsUpdateSuccess: "Settings updated successfully!",
+    settingsUpdateError: "Failed to update settings. Please try again.",
   },
   pl: {
     login: "login",
@@ -112,6 +114,8 @@ const translations = {
     emptyTitle: "Tytuł notatki nie może być pusty.",
     noteCreateError: "Nie udało się utworzyć notatki. Spróbuj ponownie.",
     noteDeleteError: "Nie udało się usunąć notatki. Spróbuj ponownie.",
+    settingsUpdateSuccess: "Ustawienia zostały pomyślnie zaktualizowane!",
+    settingsUpdateError: "Nie udało się zaktualizować ustawień. Spróbuj ponownie.",
   },
 }
 

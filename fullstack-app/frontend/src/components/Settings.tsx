@@ -21,6 +21,10 @@ const Settings: React.FC = () => {
     localStorage.setItem("theme", theme);
   }, [theme]);
 
+  useEffect(() => {
+    document.title = "2Note - Settings";
+  }, []);
+
   return (
     <div className="min-vh-100">
       <Navbar />

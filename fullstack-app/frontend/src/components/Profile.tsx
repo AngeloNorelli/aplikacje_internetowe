@@ -40,6 +40,10 @@ const Profile: React.FC = () => {
         fetchProfile();
     }, []);
 
+  useEffect(() => {
+    document.title = "2Note - Profile";
+  }, []);
+
     const handleSave = async () => {
         setError("");
         const token = localStorage.getItem("token") as string;

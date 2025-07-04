@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useToast } from "../context/ToastContext";
 import { Link, useNavigate } from "react-router-dom";
 import { login } from "../api/auth";
@@ -28,6 +28,10 @@ const Login: React.FC = () => {
       }
     }
   };
+
+  useEffect(() => {
+    document.title = "2Note - Login";
+  }, []);
 
   return (
     <div className="d-flex flex-column justify-content-center align-items-center vh-100 bg-primary">

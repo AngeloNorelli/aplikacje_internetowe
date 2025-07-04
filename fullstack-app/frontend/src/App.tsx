@@ -26,9 +26,6 @@ const App: React.FC = () => {
               <Route path="/dashboard" element={<DashboardPage />} />
               <Route path="/profile" element={<Profile />} />
               <Route path="/settings" element={<Settings />} />
-              {/* TODO
-                /profile
-              */}
             </Routes>
           </ToastProvider>
         </FontSizeProvider>

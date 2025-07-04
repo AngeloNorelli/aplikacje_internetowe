@@ -1,5 +1,31 @@
 # Dokumentacja projektu: Aplikacja do zarządzania notatkami
 
+## Jak uruchomić projekt?
+#### 1. **Sklonuj repozytorium:**
+  ```bash
+  git clone
+  cd fullstack-app
+  ```
+
+#### 2. **Utwórz bazę danych MySQL:**
+  - Uruchom skrypt SQL [db_skrypt.sql](./fullstack-app/backend/src/db/db_skrypt.sql) z katalogu `backend/src/db/db_skrypt.sql` w swojej instancji MySQL.
+  > Skrypt utworzy bazę danych oraz użytkownika z identyfikatorem, przez którego będzie się backend łączył z lokalną bazą danych.
+
+#### 3. **Utwórz plik ze zmiennymi środowiskowymi:**
+  - utwórz wartość **JWT_SECRET** w pliku `.env` w kataloku `backend`,
+  - utwórz wartość **VITE_BACKEND_URL** w pliku `.env` w kataloku `frontend` i ustaw ją na wartość zgodną ze stanem backendu (domyślnie będzie ona pod adresem `http://localhost:5000`),
+
+#### 4. **Uruchom program:**
+  ```bash
+  npm start
+  ```
+  > Skrypt automatycznie zainstaluje zależności w `backend` i `frontend` oraz uruchomi oba serwery równolegle.
+
+### 5. **Domyślny dostęp do aplikacji:**
+  - Frontend: [http://localhost:3000](http://localhost:3000)
+  - Backend API: [http://localhost:5000](http://localhost:5000)
+
+
 ## 1. Identyfikacja zagadnienia biznesowego
 Aplikacja internetowa do zarządzania notatkami powstała z myślą o użytkownikach, którzy potrzebują prostego, dostępnego z każdego miejsca narzędzia do przechowywania, edycji i organizowania własnych notatek. 
 

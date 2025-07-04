@@ -3,8 +3,8 @@
 ## Jak uruchomić projekt?
 #### 1. **Sklonuj repozytorium:**
   ```bash
-  git clone
-  cd fullstack-app
+  git clone https://github.com/AngeloNorelli/aplikacje_internetowe.git
+  cd aplikacje_internetowe/fullstack-app
   ```
 
 #### 2. **Utwórz bazę danych MySQL:**

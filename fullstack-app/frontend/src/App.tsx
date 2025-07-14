@@ -4,6 +4,7 @@ import "./App.css";
 import Welcome from "./components/Welcome";
 import Login from "./components/Login";
 import Register from "./components/Register";
+import GoogleCallback from "./components/GoogleCallback";
 import DashboardPage from "./components/dashboard/Dashboard";
 import Settings from "./components/Settings";
 import Profile from "./components/Profile";
@@ -21,6 +22,7 @@ const App: React.FC = () => {
             <Route path="/" element={<Welcome />} />
             <Route path="/login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/auth/google/callback" element={<GoogleCallback />} />
             <Route path="/dashboard" element={<DashboardPage />} />
             <Route path="/profile" element={<Profile />} />
             <Route path="/settings" element={<Settings />} />

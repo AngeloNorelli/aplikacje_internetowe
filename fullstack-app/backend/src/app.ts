@@ -1,10 +1,13 @@
 import express from "express";
 import cors from "cors";
+import passport from "passport";
+import "./controllers/googleController";
 import { connectToDatabase } from "./db/database";
 import authRoutes from "./routes/authRoutes";
 import notesRoutes from "./routes/notesRoutes";
 import profileRoutes from "./routes/profileRoutes";
 import settingRoutes from "./routes/settingRoutes";
+import googleRoutes from "./routes/googleRoutes";
 
 const app = express();
 const PORT = process.env.PORT ?? 5000;
@@ -22,6 +25,9 @@ app.use("/", authRoutes);
 app.use("/notes", notesRoutes);
 app.use("/profile", profileRoutes);
 app.use("/settings", settingRoutes);
+
+app.use(passport.initialize());
+app.use("/auth", googleRoutes);
 
 app.get("/", (req, res) => {
   res.json({ status: "Twoja MaMa" });

@@ -2,6 +2,8 @@ const translations = {
   en: {
     login: "login or email",
     loginButton: "Login",
+    loginWithAccounts: "Or log in with your other accounts:",
+    loginWithGoogle: "Login with Google",
     password: "password",
     passwordBig: "Password",
     register: "Register",
@@ -61,6 +63,8 @@ const translations = {
   pl: {
     login: "login lub email",
     loginButton: "Zaloguj się",
+    loginWithAccounts: "Lub zaloguj się przez inne konta:",
+    loginWithGoogle: "Zaloguj się przez Google",
     password: "hasło",
     passwordBig: "Hasło",
     register: "Zarejestruj się",

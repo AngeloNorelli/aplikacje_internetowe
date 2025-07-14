@@ -1,26 +1,29 @@
 import { useEffect, useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "../context/ToastContext";
+import { useSettings } from "../context/SettingsContext";
+import translations from "../assets/translations";
 
-const GoogleCallback: React.FC = () => {
+const OAuthCallback: React.FC = () => {
   const navigate = useNavigate();
+  const { language } = useSettings();
   const { setErrorMessage, setSuccessMessage } = useToast();
   const handled = useRef(false);
 
   useEffect(() => {
     if (handled.current) return;
     handled.current = true;
-    
+
     const params = new URLSearchParams(window.location.search);
     const token = params.get("token");
-    console.log("Google Callback token:", token);
+
     if (token) {
       localStorage.setItem("token", token);
       window.dispatchEvent(new Event("localTokenUpdate"));
-      setSuccessMessage("Logged in successfully with Google!");
+      setSuccessMessage(translations[language].loginSuccess);
       navigate("/dashboard");
     } else {
-      setErrorMessage("Failed to log in with Google.");
+      setErrorMessage(translations[language].loginError);
       navigate("/login");
     }
   }, [navigate]);
@@ -28,4 +31,4 @@ const GoogleCallback: React.FC = () => {
   return <div>Logging in...</div>;
 };
 
-export default GoogleCallback;
+export default OAuthCallback;

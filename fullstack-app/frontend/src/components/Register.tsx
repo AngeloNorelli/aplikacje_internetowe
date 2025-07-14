@@ -112,7 +112,7 @@ const Register: React.FC = () => {
           <p className="text-muted">
             {translations[language].accountAlreadyExistsQuestion}{" "}
             <Link to="/login" className="text-decoration-none">
-              {translations[language].login}
+              {translations[language].loginButton}
             </Link>
           </p>
         </div>

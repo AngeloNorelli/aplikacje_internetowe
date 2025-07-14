@@ -1,13 +1,13 @@
 import express from "express";
 import cors from "cors";
 import passport from "passport";
-import "./controllers/googleController";
+import "./controllers/oauthController";
 import { connectToDatabase } from "./db/database";
 import authRoutes from "./routes/authRoutes";
 import notesRoutes from "./routes/notesRoutes";
 import profileRoutes from "./routes/profileRoutes";
 import settingRoutes from "./routes/settingRoutes";
-import googleRoutes from "./routes/googleRoutes";
+import googleRoutes from "./routes/oauthRoutes";
 
 const app = express();
 const PORT = process.env.PORT ?? 5000;

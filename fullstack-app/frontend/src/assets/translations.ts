@@ -1,6 +1,6 @@
 const translations = {
   en: {
-    login: "login",
+    login: "login or email",
     loginButton: "Login",
     password: "password",
     passwordBig: "Password",
@@ -59,7 +59,7 @@ const translations = {
     settingsUpdateError: "Failed to update settings. Please try again.",
   },
   pl: {
-    login: "login",
+    login: "login lub email",
     loginButton: "Zaloguj się",
     password: "hasło",
     passwordBig: "Hasło",

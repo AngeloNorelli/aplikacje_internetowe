@@ -35,7 +35,8 @@ const NoteBoard: React.FC<NoteBoardProps> = ({note, onNoteEdited}) => {
       <div
       style={{
         flex: 1,
-        background: "#f5f7fa",
+        background: "var(--note-bg)",
+        color: "var(--note-color)",
         height: "calc(100vh - 60px)",
         padding: "32px 24px"
       }}

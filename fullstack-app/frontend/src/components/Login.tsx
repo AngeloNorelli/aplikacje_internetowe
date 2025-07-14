@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { login } from "../api/auth";
 import { useSettings } from "../context/SettingsContext";
 import translations from "../assets/translations";
+import Oauth from "./OAuth";
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState("");
@@ -83,6 +84,7 @@ const Login: React.FC = () => {
               {translations[language].register}
             </Link>
           </p>
+          <Oauth />
         </div>
       </div>
     </div>
